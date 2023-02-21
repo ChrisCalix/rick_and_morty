@@ -17,14 +17,15 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
         
     }
     
-    func test_load_requestDataFromURL() {
+    func test_loadTwice_requestDataFromURLTwice() {
         let url = URL(string: "https://rickandmortyapi.com/api/character/3")
         let client = HTTPClientSpy()
         let sut = RemoteFeedLoader(url: url!, client: client)
         
         sut.load { _ in }
+        sut.load { _ in }
         
-        XCTAssertEqual(client.requestedURLs, [url])
+        XCTAssertEqual(client.requestedURLs, [url, url])
     }
     
     //MARK: Helpers
