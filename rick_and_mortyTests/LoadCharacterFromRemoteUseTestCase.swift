@@ -11,26 +11,23 @@ import XCTest
 class LoadCharacterFromRemoteUseTestCase: XCTestCase {
     
     func test_init_doesNotRequestDataFromURL() {
-        let client = HTTPClientSpy()
-        let _ = RemoteFeedLoader(url: URL(string: "https://a-url.com")!, client: client)
-        XCTAssertTrue(client.requestedURLs.isEmpty)
+        let (_, client) = makeSUT()
         
+        XCTAssertTrue(client.requestedURLs.isEmpty)
     }
     
-//    func test_loadTwice_requestDataFromURLTwice() {
-//        let url = URL(string: "https://rickandmortyapi.com/api/character/3")
-//        let client = HTTPClientSpy()
-//        let sut = RemoteFeedLoader(url: url!, client: client)
-//        
-//        sut.load { _ in }
-//        sut.load { _ in }
-//        
-//        XCTAssertEqual(client.requestedURLs, [url, url])
-//    }
+    func test_loadTwice_requestDataFromURLTwice() {
+        let url = URL(string: "https://rickandmortyapi.com/api/character/3")!
+        let (sut, client) = makeSUT(url: url)
+        
+        sut.load { _ in }
+        sut.load { _ in }
+        
+        XCTAssertEqual(client.requestedURLs, [url, url])
+    }
     
     func test_deliversConnectivityErrorOnClientError() {
-        let client = HTTPClientSpy()
-        let sut = RemoteFeedLoader(url: URL(string: "https://rickandmortyapi.com/api/character/3")!, client: client)
+        let (sut, client) = makeSUT()
         
         let exp = expectation(description: "Wait for load completion")
         
@@ -51,6 +48,13 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
     }
     
     //MARK: Helpers
+    
+    private func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/character/3")!) -> (sut: RemoteFeedLoader, client: HTTPClientSpy) {
+        let client = HTTPClientSpy()
+        let sut = RemoteFeedLoader(url: url, client: client)
+        return (sut, client)
+    }
+    
     private class HTTPClientSpy: HTTPClient {
         private var messages = [(url: URL, completion: (HTTPClient.Result) -> Void)]()
         
