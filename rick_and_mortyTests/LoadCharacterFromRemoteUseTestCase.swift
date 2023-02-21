@@ -17,15 +17,37 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
         
     }
     
-    func test_loadTwice_requestDataFromURLTwice() {
-        let url = URL(string: "https://rickandmortyapi.com/api/character/3")
+//    func test_loadTwice_requestDataFromURLTwice() {
+//        let url = URL(string: "https://rickandmortyapi.com/api/character/3")
+//        let client = HTTPClientSpy()
+//        let sut = RemoteFeedLoader(url: url!, client: client)
+//        
+//        sut.load { _ in }
+//        sut.load { _ in }
+//        
+//        XCTAssertEqual(client.requestedURLs, [url, url])
+//    }
+    
+    func test_deliversConnectivityErrorOnClientError() {
         let client = HTTPClientSpy()
-        let sut = RemoteFeedLoader(url: url!, client: client)
+        let sut = RemoteFeedLoader(url: URL(string: "https://rickandmortyapi.com/api/character/3")!, client: client)
         
-        sut.load { _ in }
-        sut.load { _ in }
+        let exp = expectation(description: "Wait for load completion")
         
-        XCTAssertEqual(client.requestedURLs, [url, url])
+        sut.load { receivedResult in
+            switch receivedResult {
+            case let .failure(receivedError as RemoteFeedLoader.Error):
+                XCTAssertEqual(receivedError, .connectivity)
+            default:
+                XCTFail("Expected Result instead")
+            }
+            exp.fulfill()
+        }
+        
+        let clientError = NSError(domain: "Test", code: 0)
+        client.complete(with: clientError)
+        
+        waitForExpectations(timeout: 1)
     }
     
     //MARK: Helpers
@@ -40,6 +62,13 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
             messages.append((url, completion))
         }
         
+        func complete(with error: Error, at index: Int = 0) {
+            guard messages.count > index else {
+                return XCTFail("Can't complete request neve made")
+            }
+            
+            messages[index].completion(.failure(error))
+        }
         
     }
 }

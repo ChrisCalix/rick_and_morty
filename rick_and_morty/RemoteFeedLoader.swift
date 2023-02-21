@@ -11,7 +11,7 @@ class RemoteFeedLoader: FeedLoader {
     private let url: URL
     private let client: HTTPClient
     
-    private enum Error: Swift.Error {
+    public enum Error: Swift.Error {
         case connectivity
         case invalidData
         case unknown
@@ -27,9 +27,10 @@ class RemoteFeedLoader: FeedLoader {
             switch result {
             case .failure:
                 completion(.failure(Error.connectivity))
-            default:
+            default: 
                 completion(.failure(Error.unknown))
             }
+            
         }
     }
     
