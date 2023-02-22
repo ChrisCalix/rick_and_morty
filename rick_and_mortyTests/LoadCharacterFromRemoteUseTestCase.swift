@@ -28,23 +28,11 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
 
     func test_deliversConnectivityErrorOnClientError() {
         let (sut, client) = makeSUT()
-
-        let exp = expectation(description: "Wait for load completion")
-
-        sut.load { receivedResult in
-            switch receivedResult {
-            case let .failure(receivedError as RemoteFeedLoader.Error):
-                XCTAssertEqual(receivedError, .connectivity)
-            default:
-                XCTFail("Expected Result instead")
-            }
-            exp.fulfill()
-        }
-
-        let clientError = NSError(domain: "Test", code: 0)
-        client.complete(with: clientError)
-
-        waitForExpectations(timeout: 1)
+        
+        expect(sut, toCompleteWith: .failure(.connectivity), when: {
+            let clientError = NSError(domain: "Test", code: 0)
+            client.complete(with: clientError)
+        })
     }
 
     func test_load_deliversInvalidDataErrorOnNon200HTTPResponse() {
@@ -53,65 +41,31 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
         let samples = [199, 201, 300, 400, 500]
 
         samples.enumerated().forEach { index, code in
-            let exp = expectation(description: "Wait for load completion")
-            sut.load { receivedResult in
-                switch receivedResult {
-                case let .failure(receivedError as RemoteFeedLoader.Error):
-                    XCTAssertEqual(receivedError, .invalidData)
-                default:
-                    XCTFail("Expected Result instead")
-                }
-                exp.fulfill()
-            }
-            let json = makeItemsJSON()
-            client.complete(withStatusCode: code, data: json, at: index)
-
-            waitForExpectations(timeout: 1)
+            expect(sut, toCompleteWith: .failure(.invalidData), when: {
+                let json = makeItemsJSON()
+                client.complete(withStatusCode: code, data: json, at: index)
+            })
         }
     }
 
     func test_load_deliversInvalidDataErrorOn200HTTPResponseWithinvalidJSON() {
         let (sut, client) = makeSUT()
 
-        let exp = expectation(description: "Wait for load completion")
-        sut.load { receivedResult in
-            switch receivedResult {
-            case let .failure(receivedError as RemoteFeedLoader.Error):
-                XCTAssertEqual(receivedError, .invalidData)
-            default:
-                XCTFail("Expected Result instead")
-            }
-            exp.fulfill()
-        }
-
-        let invalidJSON = Data("invalid JSON".utf8)
-        client.complete(withStatusCode: 200, data: invalidJSON)
-
-        waitForExpectations(timeout: 1)
+        expect(sut, toCompleteWith: .failure(.invalidData), when: {
+            let invalidJSON = Data("invalid JSON".utf8)
+            client.complete(withStatusCode: 200, data: invalidJSON)
+        })
     }
     
     func test_load_deliversSuccessWithNoItemsOn200HTTPResponseWithJSONItems() {
         let (sut, client) = makeSUT()
         
-        let secondCharacter = makeCharacter(id: 2, name: "Morty Smith", status: "Alive", species: "Human", gender: "Male", origin: FeedCharacter.Direction(name: "unknown", url: ""), location: FeedCharacter.Direction(name: "Citadel of Ricks", url: "https://rickandmortyapi.com/api/location/3"), image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg", episode: ["https://rickandmortyapi.com/api/episode/1", "https://rickandmortyapi.com/api/episode/1"], url: "https://rickandmortyapi.com/api/character/2", created: "2017-11-04T18:50:21.651Z")
+        let character = makeCharacter(id: 2, name: "Morty Smith", status: "Alive", species: "Human", gender: "Male", origin: FeedCharacter.Direction(name: "unknown", url: ""), location: FeedCharacter.Direction(name: "Citadel of Ricks", url: "https://rickandmortyapi.com/api/location/3"), image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg", episode: ["https://rickandmortyapi.com/api/episode/1", "https://rickandmortyapi.com/api/episode/1"], url: "https://rickandmortyapi.com/api/character/2", created: "2017-11-04T18:50:21.651Z")
         
-        let exp = expectation(description: "Wait for load completion")
-        sut.load { receivedResult in
-            switch receivedResult {
-            case let .failure(receivedError as RemoteFeedLoader.Error):
-                XCTFail("Expected Result instead")
-            case let .success(receivedCharacter):
-                XCTAssertEqual(receivedCharacter, secondCharacter.model)
-            default:
-                XCTFail("Expected result instead")
-            }
-            exp.fulfill()
-        }
-        
-        let json = makeItemsJSON(secondCharacter.json)
-        client.complete(withStatusCode: 200, data: json)
-        
-        waitForExpectations(timeout: 1)
+        expect(sut, toCompleteWith: .success(character.model), when: {
+            let json = makeItemsJSON(character.json)
+            client.complete(withStatusCode: 200, data: json)
+        })
     }
     
     //MARK: Helpers
@@ -154,6 +108,27 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
         ].compactMapValues{ $0 }
         
         return (character, json)
+    }
+    
+    func expect(_ sut: RemoteFeedLoader, toCompleteWith expectedResult: Result<FeedCharacter, RemoteFeedLoader.Error>, when action: () -> Void) {
+        let exp = expectation(description: "Wait for load completion")
+        
+        sut.load { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.success(receivedChar), .success(expectedChar)):
+                XCTAssertEqual(receivedChar, expectedChar)
+            case let (.failure(receivedError as RemoteFeedLoader.Error), .failure(expectedError)):
+                XCTAssertEqual(receivedError, expectedError)
+            default:
+                XCTFail("Expected result \(expectedResult) got \(receivedResult) instead")
+            }
+            
+            exp.fulfill()
+        }
+        
+        action()
+        
+        waitForExpectations(timeout: 0.1)
     }
     
     private class HTTPClientSpy: HTTPClient {
