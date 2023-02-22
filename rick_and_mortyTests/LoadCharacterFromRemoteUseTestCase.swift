@@ -70,6 +70,26 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
         }
     }
     
+    func test_load_deliversInvalidDataErrorOn200HTTPResponseWithinvalidJSON() {
+        let (sut, client) = makeSUT()
+        
+        let exp = expectation(description: "Wait for load completion")
+        sut.load { receivedResult in
+            switch receivedResult {
+            case let .failure(receivedError as RemoteFeedLoader.Error):
+                XCTAssertEqual(receivedError, .invalidData)
+            default:
+                XCTFail("Expected Result instead")
+            }
+            exp.fulfill()
+        }
+        
+        let invalidJSON = Data("invalid JSON".utf8)
+        client.complete(withStatusCode: 200, data: invalidJSON)
+        
+        waitForExpectations(timeout: 1)
+    }
+    
     //MARK: Helpers
     
     private func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/character/3")!) -> (sut: RemoteFeedLoader, client: HTTPClientSpy) {
