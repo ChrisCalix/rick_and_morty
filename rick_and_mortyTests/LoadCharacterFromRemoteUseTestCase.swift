@@ -110,17 +110,17 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
         return (character, json)
     }
     
-    func expect(_ sut: RemoteFeedLoader, toCompleteWith expectedResult: Result<FeedCharacter, RemoteFeedLoader.Error>, when action: () -> Void) {
+    func expect(_ sut: RemoteFeedLoader, toCompleteWith expectedResult: Result<FeedCharacter, RemoteFeedLoader.Error>, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
         let exp = expectation(description: "Wait for load completion")
         
         sut.load { receivedResult in
             switch (receivedResult, expectedResult) {
             case let (.success(receivedChar), .success(expectedChar)):
-                XCTAssertEqual(receivedChar, expectedChar)
+                XCTAssertEqual(receivedChar, expectedChar, file: file, line: line)
             case let (.failure(receivedError as RemoteFeedLoader.Error), .failure(expectedError)):
-                XCTAssertEqual(receivedError, expectedError)
+                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
             default:
-                XCTFail("Expected result \(expectedResult) got \(receivedResult) instead")
+                XCTFail("Expected result \(expectedResult) got \(receivedResult) instead", file: file, line: line)
             }
             
             exp.fulfill()
@@ -142,7 +142,7 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
             messages.append((url, completion))
         }
         
-        func complete(with error: Error, at index: Int = 0) {
+        func complete(with error: Error, at index: Int = 0, file: StaticString = #filePath, line: UInt = #line) {
             guard messages.count > index else {
                 return XCTFail("Can't complete request neve made")
             }
@@ -150,7 +150,7 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
             messages[index].completion(.failure(error))
         }
         
-        func complete(withStatusCode code: Int, data: Data, at index: Int = 0) {
+        func complete(withStatusCode code: Int, data: Data, at index: Int = 0, file: StaticString = #filePath, line: UInt = #line) {
             guard requestedURLs.count > index else {
                 return XCTFail("Can't complete request never made")
             }
