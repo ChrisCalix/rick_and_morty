@@ -25,15 +25,58 @@ class RemoteFeedLoader: FeedLoader {
     func load(completion: @escaping (FeedLoader.Result) -> Void) {
         client.get(from: url) { result in
             switch result {
+            case let .success((data, response)):
+                completion(FeedCharacterMapper.map(data, response: response))
             case .failure:
                 completion(.failure(Error.connectivity))
-            default: 
-                completion(.failure(Error.unknown))
             }
             
         }
     }
     
+}
+
+enum FeedCharacterMapper {
+    
+    
+    struct Root: Decodable {
+        let id: Int
+        let name: String
+        let status: String
+        let species: String
+        let type: String
+        let gender: String
+//        let origin: AnyObject?
+//        let location: AnyObject?
+        let image: String?
+        let episode: [String]?
+        let url: String?
+        let created: String?
+        
+        private enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case name = "name"
+            case status = "status"
+            case species = "species"
+            case type = "type"
+            case gender = "gender"
+//            case origin = "origin"
+//            case location = "location"
+            case image = "image"
+            case episode = "episode"
+            case url = "url"
+            case created = "created"
+        }
+    }
+    
+    private static let OK_200: Int = 200
+    
+    static func map(_ data: Data, response: HTTPURLResponse) -> RemoteFeedLoader.Result {
+        guard response.statusCode == OK_200, let _ = try? JSONDecoder().decode(Root.self, from: data) else {
+            return .failure(RemoteFeedLoader.Error.invalidData)
+        }
+        return .success([])
+    }
 }
 
 protocol FeedLoader {

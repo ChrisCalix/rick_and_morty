@@ -47,12 +47,40 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
+    func test_load_deliversInvalidDataErrorOnNon200HTTPResponse() {
+        let (sut, client) = makeSUT()
+        
+        let samples = [199, 201, 300, 400, 500]
+        
+        samples.enumerated().forEach { index, code in
+            let exp = expectation(description: "Wait for load completion")
+            sut.load { receivedResult in
+                switch receivedResult {
+                case let .failure(receivedError as RemoteFeedLoader.Error):
+                    XCTAssertEqual(receivedError, .invalidData)
+                default:
+                    XCTFail("Expected Result instead")
+                }
+                exp.fulfill()
+            }
+            let json = makeItemsJSON([])
+            client.complete(withStatusCode: code, data: json, at: index)
+            
+            waitForExpectations(timeout: 1)
+        }
+    }
+    
     //MARK: Helpers
     
     private func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/character/3")!) -> (sut: RemoteFeedLoader, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
         let sut = RemoteFeedLoader(url: url, client: client)
         return (sut, client)
+    }
+    
+    private func makeItemsJSON(_ items: [[String: Any]]) -> Data {
+        let json = ["Characters": items]
+        return try! JSONSerialization.data(withJSONObject: json)
     }
     
     private class HTTPClientSpy: HTTPClient {
@@ -74,5 +102,18 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
             messages[index].completion(.failure(error))
         }
         
+        func complete(withStatusCode code: Int, data: Data, at index: Int = 0) {
+            guard requestedURLs.count > index else {
+                return XCTFail("Can't complete request never made")
+            }
+            
+            let response = HTTPURLResponse(
+                url: requestedURLs[index],
+                statusCode: code,
+                httpVersion: nil,
+                headerFields: nil)!
+            
+            messages[index].completion(.success((data, response)))
+        }
     }
 }
