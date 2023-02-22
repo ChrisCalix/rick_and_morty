@@ -68,16 +68,37 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
         })
     }
     
+    func test_load_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
+        let url = URL(string: "https://rickandmortyapi.com/api/character/3")!
+        let client = HTTPClientSpy()
+        var sut: RemoteFeedLoader? = RemoteFeedLoader(url: url, client: client)
+        
+        var capturedResult : RemoteFeedLoader.Result?
+        sut?.load { capturedResult = $0 }
+        
+        sut = nil
+        client.complete(withStatusCode: 200, data: makeItemsJSON())
+        XCTAssertNil(capturedResult)
+    }
+    
     //MARK: Helpers
     
-    private func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/character/3")!) -> (sut: RemoteFeedLoader, client: HTTPClientSpy) {
+    private func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/character/3")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
         let sut = RemoteFeedLoader(url: url, client: client)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        trackForMemoryLeaks(client, file: file, line: line)
         return (sut, client)
     }
     
     private func makeItemsJSON(_ character: [String: Any] = ["": ""]) -> Data {
         return try! JSONSerialization.data(withJSONObject: character)
+    }
+    
+    func trackForMemoryLeaks(_ instance: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
+        addTeardownBlock { [weak instance] in 
+            XCTAssertNil(instance, "Instance should have been deallocated. Potential memory leak.", file: file, line: line)
+        }
     }
     
     private func makeCharacter(id: Int, name: String, status: String, species: String = "", type: String = "", gender: String = "", origin: FeedCharacter.Direction = FeedCharacter.Direction(name: "", url: ""), location: FeedCharacter.Direction = FeedCharacter.Direction(name: "", url: ""), image: String, episode: [String] = [], url: String, created: String = "") -> (model: FeedCharacter, json: [String: Any]) {
