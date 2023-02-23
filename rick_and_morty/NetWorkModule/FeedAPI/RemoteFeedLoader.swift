@@ -7,7 +7,7 @@
 
 import Foundation
 
-class RemoteFeedLoader<T>: FeedLoader {
+class RemoteFeedLoader<T>: FeedLoader where T: Decodable {
     typealias D = T
     
     private let url: URL
@@ -28,7 +28,7 @@ class RemoteFeedLoader<T>: FeedLoader {
         client.get(from: url) { result in
             switch result {
             case let .success((data, response)):
-                completion(FeedCharacterMapper.mapSingleCharacter(data, response: response))
+                completion(FeedMapper.validateAndMap(data, response: response))
             case .failure:
                 completion(.failure(Error.connectivity))
             }
