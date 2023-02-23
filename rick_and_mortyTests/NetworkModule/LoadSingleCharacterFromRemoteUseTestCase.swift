@@ -42,7 +42,7 @@ class LoadSingleCharacterFromRemoteUseTestCase: XCTestCase {
 
         samples.enumerated().forEach { index, code in
             expect(sut, toCompleteWith: .failure(.invalidData), when: {
-                let json = makeItemsJSON()
+                let json = makecharacterJSON()
                 client.complete(withStatusCode: code, data: json, at: index)
             })
         }
@@ -63,7 +63,7 @@ class LoadSingleCharacterFromRemoteUseTestCase: XCTestCase {
         let character = makeSingleCharacter(id: 2, name: "Morty Smith", status: "Alive", species: "Human", gender: "Male", origin: FeedCharacter.Direction(name: "unknown", url: ""), location: FeedCharacter.Direction(name: "Citadel of Ricks", url: "https://rickandmortyapi.com/api/location/3"), image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg", episode: ["https://rickandmortyapi.com/api/episode/1", "https://rickandmortyapi.com/api/episode/1"], url: "https://rickandmortyapi.com/api/character/2", created: "2017-11-04T18:50:21.651Z")
         
         expect(sut, toCompleteWith: .success(character.model), when: {
-            let json = makeItemsJSON(character.json)
+            let json = makecharacterJSON(character.json)
             client.complete(withStatusCode: 200, data: json)
         })
     }
@@ -77,9 +77,7 @@ class LoadSingleCharacterFromRemoteUseTestCase: XCTestCase {
         return (sut, client)
     }
     
-    private func makeItemsJSON(_ character: [String: Any] = ["": ""]) -> Data {
-        return try! JSONSerialization.data(withJSONObject: character)
-    }
+   
     
     private func makeSingleCharacter(id: Int, name: String, status: String, species: String = "", type: String = "", gender: String = "", origin: FeedCharacter.Direction = FeedCharacter.Direction(name: "", url: ""), location: FeedCharacter.Direction = FeedCharacter.Direction(name: "", url: ""), image: String, episode: [String] = [], url: String, created: String = "") -> (model: FeedCharacter, json: [String: Any]) {
         
