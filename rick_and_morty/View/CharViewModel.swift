@@ -12,7 +12,7 @@ class CharViewModel: ObservableObject {
     
     init () {
         let remote = RemoteFeedLoader(url: URL(string: "https://rickandmortyapi.com/api/character/3")!, client: APIService())
-        remote.loadSingleCharacter() { [weak self] result in
+        remote.load() { [weak self] result in
             guard let self else { return }
             switch result {
             case let .success(feed):

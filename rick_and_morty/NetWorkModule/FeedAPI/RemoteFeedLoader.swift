@@ -8,6 +8,8 @@
 import Foundation
 
 class RemoteFeedLoader: FeedLoader {
+    typealias T = FeedCharacter
+    
     private let url: URL
     private let client: HTTPClient
     
@@ -22,7 +24,7 @@ class RemoteFeedLoader: FeedLoader {
         self.client = client
     }
     
-    func loadSingleCharacter(completion: @escaping (FeedLoader.SingleResult) -> Void) {
+    func load(completion: @escaping (FeedResult) -> Void) {
         client.get(from: url) { result in
             switch result {
             case let .success((data, response)):
@@ -31,16 +33,5 @@ class RemoteFeedLoader: FeedLoader {
                 completion(.failure(Error.connectivity))
             }
         }
-    }
-    
-    func loadMultipleCharacters(completion: @escaping (FeedLoader.MultipleResult) -> Void) {
-//        client.get(from: url) { result in
-//            switch result {
-//            case let .success((data, response)):
-//                completion(FeedCharacterMapper.map(data, response: response))
-//            case .failure:
-//                completion(.failure(Error.connectivity))
-//            }
-//        }
     }
 }

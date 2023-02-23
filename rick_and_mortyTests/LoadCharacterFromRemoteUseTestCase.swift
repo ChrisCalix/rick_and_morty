@@ -20,8 +20,8 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
         let url = URL(string: "https://rickandmortyapi.com/api/character/3")!
         let (sut, client) = makeSUT(url: url)
 
-        sut.loadSingleCharacter { _ in }
-        sut.loadSingleCharacter { _ in }
+        sut.load { _ in }
+        sut.load { _ in }
 
         XCTAssertEqual(client.requestedURLs, [url, url])
     }
@@ -114,7 +114,7 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
     func expect(_ sut: RemoteFeedLoader, toCompleteWith expectedResult: Result<FeedCharacter, RemoteFeedLoader.Error>, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
         let exp = expectation(description: "Wait for load completion")
         
-        sut.loadSingleCharacter { receivedResult in
+        sut.load { receivedResult in
             switch (receivedResult, expectedResult) {
             case let (.success(receivedChar), .success(expectedChar)):
                 XCTAssertEqual(receivedChar, expectedChar, file: file, line: line)
