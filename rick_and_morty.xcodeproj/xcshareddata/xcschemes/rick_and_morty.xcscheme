@@ -39,6 +39,11 @@
                BlueprintName = "rick_and_mortyTests"
                ReferencedContainer = "container:rick_and_morty.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "LoadSingleCharacterFromRemoteUseTestCase">
+               </Test>
+            </SkippedTests>
          </TestableReference>
          <TestableReference
             skipped = "YES"

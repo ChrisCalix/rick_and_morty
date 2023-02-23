@@ -17,13 +17,13 @@
 		C3A63B0F29A8113E00B56D98 /* FeedMultipleCharacters.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A63B0E29A8113E00B56D98 /* FeedMultipleCharacters.swift */; };
 		C3A63B1129A8135F00B56D98 /* LoadMultipleCharacterFromRemoteUseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A63B1029A8135F00B56D98 /* LoadMultipleCharacterFromRemoteUseTestCase.swift */; };
 		C3A63B1329A814F100B56D98 /* XCTestCase+makeCharacterJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A63B1229A814F100B56D98 /* XCTestCase+makeCharacterJson.swift */; };
+		C3A63B1429A8179200B56D98 /* LoadSingleCharacterFromRemoteUseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D598FB29A5775F0069B505 /* LoadSingleCharacterFromRemoteUseTestCase.swift */; };
 		C3D598D229A575A00069B505 /* rick_and_mortyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D598D129A575A00069B505 /* rick_and_mortyApp.swift */; };
 		C3D598D429A575A00069B505 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D598D329A575A00069B505 /* ContentView.swift */; };
 		C3D598D629A575A20069B505 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3D598D529A575A20069B505 /* Assets.xcassets */; };
 		C3D598D929A575A20069B505 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3D598D829A575A20069B505 /* Preview Assets.xcassets */; };
 		C3D598ED29A575A20069B505 /* rick_and_mortyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D598EC29A575A20069B505 /* rick_and_mortyUITests.swift */; };
 		C3D598EF29A575A20069B505 /* rick_and_mortyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D598EE29A575A20069B505 /* rick_and_mortyUITestsLaunchTests.swift */; };
-		C3D598FC29A5775F0069B505 /* LoadSingleCharacterFromRemoteUseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D598FB29A5775F0069B505 /* LoadSingleCharacterFromRemoteUseTestCase.swift */; };
 		C3D598FE29A5799E0069B505 /* RemoteFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D598FD29A5799E0069B505 /* RemoteFeedLoader.swift */; };
 		C3D5990429A5CC7C0069B505 /* HTTPClientSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D5990329A5CC7C0069B505 /* HTTPClientSpy.swift */; };
 /* End PBXBuildFile section */
@@ -358,8 +358,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3A63B1429A8179200B56D98 /* LoadSingleCharacterFromRemoteUseTestCase.swift in Sources */,
 				C3A63B1329A814F100B56D98 /* XCTestCase+makeCharacterJson.swift in Sources */,
-				C3D598FC29A5775F0069B505 /* LoadSingleCharacterFromRemoteUseTestCase.swift in Sources */,
 				C3A63B1129A8135F00B56D98 /* LoadMultipleCharacterFromRemoteUseTestCase.swift in Sources */,
 				C3D5990429A5CC7C0069B505 /* HTTPClientSpy.swift in Sources */,
 				C34B4A4E29A7B8EE002C57D1 /* XCTestCase+MemoryLeakTracking.swift in Sources */,

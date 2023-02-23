@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct Root: Decodable {
-    let result: [FeedCharacter]
+struct Root: Decodable, Equatable {
+    let results: [FeedCharacter]
 }

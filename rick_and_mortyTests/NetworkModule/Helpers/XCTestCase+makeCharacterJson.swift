@@ -11,4 +11,9 @@ extension XCTestCase {
      func makecharacterJSON(_ character: [String: Any] = ["": ""]) -> Data {
         return try! JSONSerialization.data(withJSONObject: character)
     }
+    
+    func makecharactersJSON(_ characters: [[String: Any]]) -> Data {
+        let json = characters
+        return try! JSONSerialization.data(withJSONObject: json)
+    }
 }
