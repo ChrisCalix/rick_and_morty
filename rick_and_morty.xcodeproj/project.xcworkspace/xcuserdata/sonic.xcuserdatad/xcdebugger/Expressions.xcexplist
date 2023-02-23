@@ -10,5 +10,16 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "closure #1 in RemoteFeedLoader.load(completion:):RemoteFeedLoader.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self == nil">
+            </PersistentString>
+            <PersistentString
+               value = "FeedCharacterMapper.map(data, response: response)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>
