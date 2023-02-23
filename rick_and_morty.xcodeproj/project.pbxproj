@@ -18,6 +18,7 @@
 		C3A63B1129A8135F00B56D98 /* LoadMultipleCharacterFromRemoteUseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A63B1029A8135F00B56D98 /* LoadMultipleCharacterFromRemoteUseTestCase.swift */; };
 		C3A63B1329A814F100B56D98 /* XCTestCase+makeCharacterJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A63B1229A814F100B56D98 /* XCTestCase+makeCharacterJson.swift */; };
 		C3A63B1429A8179200B56D98 /* LoadSingleCharacterFromRemoteUseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D598FB29A5775F0069B505 /* LoadSingleCharacterFromRemoteUseTestCase.swift */; };
+		C3A63B1829A820B100B56D98 /* NetworkTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A63B1729A820B100B56D98 /* NetworkTestCase.swift */; };
 		C3D598D229A575A00069B505 /* rick_and_mortyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D598D129A575A00069B505 /* rick_and_mortyApp.swift */; };
 		C3D598D429A575A00069B505 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D598D329A575A00069B505 /* ContentView.swift */; };
 		C3D598D629A575A20069B505 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3D598D529A575A20069B505 /* Assets.xcassets */; };
@@ -56,6 +57,7 @@
 		C3A63B0E29A8113E00B56D98 /* FeedMultipleCharacters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedMultipleCharacters.swift; sourceTree = "<group>"; };
 		C3A63B1029A8135F00B56D98 /* LoadMultipleCharacterFromRemoteUseTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMultipleCharacterFromRemoteUseTestCase.swift; sourceTree = "<group>"; };
 		C3A63B1229A814F100B56D98 /* XCTestCase+makeCharacterJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+makeCharacterJson.swift"; sourceTree = "<group>"; };
+		C3A63B1729A820B100B56D98 /* NetworkTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTestCase.swift; sourceTree = "<group>"; };
 		C3D598CE29A575A00069B505 /* rick_and_morty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rick_and_morty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3D598D129A575A00069B505 /* rick_and_mortyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rick_and_mortyApp.swift; sourceTree = "<group>"; };
 		C3D598D329A575A00069B505 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				C3D5990229A5CC580069B505 /* Helpers */,
 				C3D598FB29A5775F0069B505 /* LoadSingleCharacterFromRemoteUseTestCase.swift */,
 				C3A63B1029A8135F00B56D98 /* LoadMultipleCharacterFromRemoteUseTestCase.swift */,
+				C3A63B1729A820B100B56D98 /* NetworkTestCase.swift */,
 			);
 			path = NetworkModule;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				C3A63B1329A814F100B56D98 /* XCTestCase+makeCharacterJson.swift in Sources */,
 				C3A63B1129A8135F00B56D98 /* LoadMultipleCharacterFromRemoteUseTestCase.swift in Sources */,
 				C3D5990429A5CC7C0069B505 /* HTTPClientSpy.swift in Sources */,
+				C3A63B1829A820B100B56D98 /* NetworkTestCase.swift in Sources */,
 				C34B4A4E29A7B8EE002C57D1 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
