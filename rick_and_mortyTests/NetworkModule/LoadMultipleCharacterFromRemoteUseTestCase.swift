@@ -75,4 +75,9 @@ class LoadMultipleCharacterFromRemoteUseTestCase: NetworkTestCase<[FeedCharacter
     override func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/character/1,2,3")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader<[FeedCharacter]>, client: HTTPClientSpy) {
         super.makeSUT(url: url, file: file, line: line)
     }
+    
+    func makecharactersJSON(_ characters: [[String: Any]]) -> Data {
+        let json = characters
+        return try! JSONSerialization.data(withJSONObject: json)
+    }
 }

@@ -67,8 +67,9 @@ class LoadSingleCharacterFromRemoteUseTestCase: NetworkTestCase<FeedCharacter> {
             client.complete(withStatusCode: 200, data: json)
         })
     }
-
+    
+    // MARK: Helpers
     override func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/character/3")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader<FeedCharacter>, client: HTTPClientSpy) {
-        super.makeSUT(url: url)
+        super.makeSUT(url: url, file: file, line: line)
     }
 }
