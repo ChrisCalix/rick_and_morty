@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 final class APIService: HTTPClient {
     
     func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
@@ -24,5 +23,9 @@ final class APIService: HTTPClient {
         }
 
         task.resume()
+    }
+    
+    enum HTTPError : Error {
+        case notHttpURLResponse
     }
 }
