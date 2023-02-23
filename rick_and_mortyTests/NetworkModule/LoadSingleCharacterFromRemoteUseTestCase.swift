@@ -72,4 +72,34 @@ class LoadSingleCharacterFromRemoteUseTestCase: NetworkTestCase<FeedCharacter> {
     override func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/character/3")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader<FeedCharacter>, client: HTTPClientSpy) {
         super.makeSUT(url: url, file: file, line: line)
     }
+    
+    func makeSingleCharacter(id: Int, name: String, status: String, species: String = "", type: String = "", gender: String = "", origin: FeedCharacter.Direction = FeedCharacter.Direction(name: "", url: ""), location: FeedCharacter.Direction = FeedCharacter.Direction(name: "", url: ""), image: String, episode: [String] = [], url: String, created: String = "") -> (model: FeedCharacter, json: [String: Any]) {
+        
+        let character = FeedCharacter(id: id, name: name, status: status, species: species, type: type, gender: gender, origin: origin, location: location, image: image, episode: episode, url: url, created: created)
+        
+        let jsonOrigin = [
+            "name": origin.name,
+            "url": origin.url
+        ]
+        let jsonLocation = [
+            "name": location.name,
+            "url": location.url
+        ]
+        let json : [String: Any]  = [
+            "id": id,
+            "name": name,
+            "status": status,
+            "species": species,
+            "type": type,
+            "gender": gender,
+            "origin": jsonOrigin,
+            "location": jsonLocation,
+            "image": image,
+            "episode": episode,
+            "url": url,
+            "created": created
+        ].compactMapValues{ $0 }
+        
+        return (character, json)
+    }
 }

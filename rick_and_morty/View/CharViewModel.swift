@@ -11,17 +11,20 @@ class CharViewModel: ObservableObject {
     @Published var char : [FeedCharacter] = []
     
     init () {
-        let remote = RemoteFeedLoader<FeedCharacter>(url: URL(string: "https://rickandmortyapi.com/api/character/3")!, client: APIService())
-//        remote.load() { [weak self] result in
-//            guard let self else { return }
-//            switch result {
-//            case let .success(feed):
-//                self.char = [feed]
-//                print("succes \(feed)")
-//            case let .failure(error):
-//                print("error \(error)")
-//            }
-//        }
+        let remote = RemoteFeedLoader<[FeedCharacter]>(url: URL(string: "https://rickandmortyapi.com/api/character/1,2,3")!, client: APIService())
+        remote.load() { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case let .success(feed):
+                DispatchQueue.main.async {
+                    self.char = feed
+                }
+                
+                print("succes \(feed)")
+            case let .failure(error):
+                print("error \(error)")
+            }
+        }
     }
 
 }
