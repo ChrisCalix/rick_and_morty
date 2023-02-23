@@ -8,8 +8,8 @@
 import Foundation
 
 protocol FeedLoader {
-    associatedtype T
-    typealias FeedResult = Swift.Result<T, Error>
+    associatedtype D
+    typealias FeedResult = Swift.Result<D, Error>
     
     func load(completion: @escaping (FeedResult) -> Void)
 }

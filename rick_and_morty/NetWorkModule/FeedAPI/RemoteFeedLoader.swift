@@ -7,8 +7,8 @@
 
 import Foundation
 
-class RemoteFeedLoader: FeedLoader {
-    typealias T = FeedCharacter
+class RemoteFeedLoader<T>: FeedLoader {
+    typealias D = T
     
     private let url: URL
     private let client: HTTPClient
@@ -28,7 +28,7 @@ class RemoteFeedLoader: FeedLoader {
         client.get(from: url) { result in
             switch result {
             case let .success((data, response)):
-                completion(FeedCharacterMapper.map(data, response: response))
+                completion(FeedCharacterMapper.mapSingleCharacter(data, response: response))
             case .failure:
                 completion(.failure(Error.connectivity))
             }

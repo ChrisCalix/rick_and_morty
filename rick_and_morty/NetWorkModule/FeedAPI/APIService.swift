@@ -13,7 +13,7 @@ final class APIService: HTTPClient {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             do {
                 guard let httpResponse = response as? HTTPURLResponse, let data else {
-                    throw RemoteFeedLoader.Error.connectivity
+                    throw RemoteFeedLoader<Any>.Error.connectivity
                 }
                 
                 completion(.success((data, httpResponse)))
