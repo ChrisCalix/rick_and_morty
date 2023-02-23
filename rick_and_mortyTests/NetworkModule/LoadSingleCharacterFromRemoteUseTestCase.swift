@@ -8,17 +8,17 @@
 import XCTest
 @testable import rick_and_morty
 
-class LoadCharacterFromRemoteUseTestCase: XCTestCase {
+class LoadSingleCharacterFromRemoteUseTestCase: XCTestCase {
     
     func test_singleCharacter_doesNotRequestDataFromURL() {
-        let (_, client) = makeSingleSUT()
+        let (_, client) = makeSUT()
 
         XCTAssertTrue(client.requestedURLs.isEmpty)
     }
 
     func test_singleCharacter_loadTwiceRequestDataFromURLTwice() {
         let url = URL(string: "https://rickandmortyapi.com/api/character/3")!
-        let (sut, client) = makeSingleSUT(url: url)
+        let (sut, client) = makeSUT(url: url)
 
         sut.load { _ in }
         sut.load { _ in }
@@ -27,7 +27,7 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
     }
 
     func test_singleCharacter_loadDeliversConnectivityErrorOnClientError() {
-        let (sut, client) = makeSingleSUT()
+        let (sut, client) = makeSUT()
         
         expect(sut, toCompleteWith: .failure(.connectivity), when: {
             let clientError = NSError(domain: "Test", code: 0)
@@ -36,7 +36,7 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
     }
 
     func test_singleCharacter_loadDeliversInvalidDataErrorOnNon200HTTPResponse() {
-        let (sut, client) = makeSingleSUT()
+        let (sut, client) = makeSUT()
 
         let samples = [199, 201, 300, 400, 500]
 
@@ -49,7 +49,7 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
     }
 
     func test_singleCharacter_loadDeliversInvalidDataErrorOn200HTTPResponseWithinvalidJSON() {
-        let (sut, client) = makeSingleSUT()
+        let (sut, client) = makeSUT()
 
         expect(sut, toCompleteWith: .failure(.invalidData), when: {
             let invalidJSON = Data("invalid JSON".utf8)
@@ -58,7 +58,7 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
     }
     
     func test_singleCharacter_loadDeliversSuccessWithNoItemsOn200HTTPResponseWithJSONItems() {
-        let (sut, client) = makeSingleSUT()
+        let (sut, client) = makeSUT()
         
         let character = makeSingleCharacter(id: 2, name: "Morty Smith", status: "Alive", species: "Human", gender: "Male", origin: FeedCharacter.Direction(name: "unknown", url: ""), location: FeedCharacter.Direction(name: "Citadel of Ricks", url: "https://rickandmortyapi.com/api/location/3"), image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg", episode: ["https://rickandmortyapi.com/api/episode/1", "https://rickandmortyapi.com/api/episode/1"], url: "https://rickandmortyapi.com/api/character/2", created: "2017-11-04T18:50:21.651Z")
         
@@ -69,7 +69,7 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
     }
 
     //MARK: Helpers
-    private func makeSingleSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/character/3")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader<FeedCharacter>, client: HTTPClientSpy) {
+    private func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/character/3")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader<FeedCharacter>, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
         let sut = RemoteFeedLoader<FeedCharacter>(url: url, client: client)
         trackForMemoryLeaks(sut, file: file, line: line)

@@ -15,13 +15,14 @@
 		C34B4A7629A7C465002C57D1 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34B4A7529A7C465002C57D1 /* APIService.swift */; };
 		C3A63B0D29A7D81900B56D98 /* CharViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A63B0C29A7D81900B56D98 /* CharViewModel.swift */; };
 		C3A63B0F29A8113E00B56D98 /* FeedMultipleCharacters.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A63B0E29A8113E00B56D98 /* FeedMultipleCharacters.swift */; };
+		C3A63B1129A8135F00B56D98 /* LoadMultipleCharacterFromRemoteUseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A63B1029A8135F00B56D98 /* LoadMultipleCharacterFromRemoteUseTestCase.swift */; };
 		C3D598D229A575A00069B505 /* rick_and_mortyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D598D129A575A00069B505 /* rick_and_mortyApp.swift */; };
 		C3D598D429A575A00069B505 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D598D329A575A00069B505 /* ContentView.swift */; };
 		C3D598D629A575A20069B505 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3D598D529A575A20069B505 /* Assets.xcassets */; };
 		C3D598D929A575A20069B505 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3D598D829A575A20069B505 /* Preview Assets.xcassets */; };
 		C3D598ED29A575A20069B505 /* rick_and_mortyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D598EC29A575A20069B505 /* rick_and_mortyUITests.swift */; };
 		C3D598EF29A575A20069B505 /* rick_and_mortyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D598EE29A575A20069B505 /* rick_and_mortyUITestsLaunchTests.swift */; };
-		C3D598FC29A5775F0069B505 /* LoadCharacterFromRemoteUseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D598FB29A5775F0069B505 /* LoadCharacterFromRemoteUseTestCase.swift */; };
+		C3D598FC29A5775F0069B505 /* LoadSingleCharacterFromRemoteUseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D598FB29A5775F0069B505 /* LoadSingleCharacterFromRemoteUseTestCase.swift */; };
 		C3D598FE29A5799E0069B505 /* RemoteFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D598FD29A5799E0069B505 /* RemoteFeedLoader.swift */; };
 		C3D5990429A5CC7C0069B505 /* HTTPClientSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D5990329A5CC7C0069B505 /* HTTPClientSpy.swift */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,7 @@
 		C34B4A7529A7C465002C57D1 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		C3A63B0C29A7D81900B56D98 /* CharViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharViewModel.swift; sourceTree = "<group>"; };
 		C3A63B0E29A8113E00B56D98 /* FeedMultipleCharacters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedMultipleCharacters.swift; sourceTree = "<group>"; };
+		C3A63B1029A8135F00B56D98 /* LoadMultipleCharacterFromRemoteUseTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMultipleCharacterFromRemoteUseTestCase.swift; sourceTree = "<group>"; };
 		C3D598CE29A575A00069B505 /* rick_and_morty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rick_and_morty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3D598D129A575A00069B505 /* rick_and_mortyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rick_and_mortyApp.swift; sourceTree = "<group>"; };
 		C3D598D329A575A00069B505 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -61,7 +63,7 @@
 		C3D598E829A575A20069B505 /* rick_and_mortyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rick_and_mortyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3D598EC29A575A20069B505 /* rick_and_mortyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rick_and_mortyUITests.swift; sourceTree = "<group>"; };
 		C3D598EE29A575A20069B505 /* rick_and_mortyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rick_and_mortyUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		C3D598FB29A5775F0069B505 /* LoadCharacterFromRemoteUseTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadCharacterFromRemoteUseTestCase.swift; sourceTree = "<group>"; };
+		C3D598FB29A5775F0069B505 /* LoadSingleCharacterFromRemoteUseTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadSingleCharacterFromRemoteUseTestCase.swift; sourceTree = "<group>"; };
 		C3D598FD29A5799E0069B505 /* RemoteFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedLoader.swift; sourceTree = "<group>"; };
 		C3D5990329A5CC7C0069B505 /* HTTPClientSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientSpy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -155,7 +157,6 @@
 			isa = PBXGroup;
 			children = (
 				C3D5990129A5CC430069B505 /* NetworkModule */,
-				C3D598FB29A5775F0069B505 /* LoadCharacterFromRemoteUseTestCase.swift */,
 			);
 			path = rick_and_mortyTests;
 			sourceTree = "<group>";
@@ -192,6 +193,8 @@
 			isa = PBXGroup;
 			children = (
 				C3D5990229A5CC580069B505 /* Helpers */,
+				C3D598FB29A5775F0069B505 /* LoadSingleCharacterFromRemoteUseTestCase.swift */,
+				C3A63B1029A8135F00B56D98 /* LoadMultipleCharacterFromRemoteUseTestCase.swift */,
 			);
 			path = NetworkModule;
 			sourceTree = "<group>";
@@ -352,7 +355,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3D598FC29A5775F0069B505 /* LoadCharacterFromRemoteUseTestCase.swift in Sources */,
+				C3D598FC29A5775F0069B505 /* LoadSingleCharacterFromRemoteUseTestCase.swift in Sources */,
+				C3A63B1129A8135F00B56D98 /* LoadMultipleCharacterFromRemoteUseTestCase.swift in Sources */,
 				C3D5990429A5CC7C0069B505 /* HTTPClientSpy.swift in Sources */,
 				C34B4A4E29A7B8EE002C57D1 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 			);
