@@ -8,7 +8,7 @@
 import XCTest
 @testable import rick_and_morty
 
-class LoadMultipleCharacterFromRemoteUseTestCase: NetworkTestCase<[FeedCharacter]> {
+class LoadMultipleCharacterFromRemoteUseTestCase: NetworkTestCase<[CharacterModel]> {
 
     func test_multipleCharacter_doesNotRequestDataFromURL() {
         let (_, client) = makeSUT()
@@ -60,9 +60,9 @@ class LoadMultipleCharacterFromRemoteUseTestCase: NetworkTestCase<[FeedCharacter
     func test_singleCharacter_loadDeliversSuccessWithNoItemsOn200HTTPResponseWithJSONItems() {
         let (sut, client) = makeSUT()
         
-        let character1 = makeSingleCharacter(id: 2, name: "Morty Smith", status: "Alive", species: "Human", gender: "Male", origin: FeedCharacter.Direction(name: "unknown", url: ""), location: FeedCharacter.Direction(name: "Citadel of Ricks", url: "https://rickandmortyapi.com/api/location/3"), image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg", episode: ["https://rickandmortyapi.com/api/episode/1", "https://rickandmortyapi.com/api/episode/1"], url: "https://rickandmortyapi.com/api/character/2", created: "2017-11-04T18:50:21.651Z")
+        let character1 = makeSingleCharacter(id: 2, name: "Morty Smith", status: "Alive", species: "Human", gender: "Male", origin: CharacterModel.Direction(name: "unknown", url: ""), location: CharacterModel.Direction(name: "Citadel of Ricks", url: "https://rickandmortyapi.com/api/location/3"), image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg", episode: ["https://rickandmortyapi.com/api/episode/1", "https://rickandmortyapi.com/api/episode/1"], url: "https://rickandmortyapi.com/api/character/2", created: "2017-11-04T18:50:21.651Z")
         
-        let character2 = makeSingleCharacter(id: 2, name: "Morty Smith", status: "Alive", species: "Human", gender: "Male", origin: FeedCharacter.Direction(name: "unknown", url: ""), location: FeedCharacter.Direction(name: "Citadel of Ricks", url: "https://rickandmortyapi.com/api/location/3"), image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg", episode: ["https://rickandmortyapi.com/api/episode/1", "https://rickandmortyapi.com/api/episode/1"], url: "https://rickandmortyapi.com/api/character/2", created: "2017-11-04T18:50:21.651Z")
+        let character2 = makeSingleCharacter(id: 2, name: "Morty Smith", status: "Alive", species: "Human", gender: "Male", origin: CharacterModel.Direction(name: "unknown", url: ""), location: CharacterModel.Direction(name: "Citadel of Ricks", url: "https://rickandmortyapi.com/api/location/3"), image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg", episode: ["https://rickandmortyapi.com/api/episode/1", "https://rickandmortyapi.com/api/episode/1"], url: "https://rickandmortyapi.com/api/character/2", created: "2017-11-04T18:50:21.651Z")
         
         let chars = [character1.model, character2.model]
         expect(sut, toCompleteWith: .success(chars), when: {
@@ -72,7 +72,7 @@ class LoadMultipleCharacterFromRemoteUseTestCase: NetworkTestCase<[FeedCharacter
     }
     
     //MARK: Helpers
-    override func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/character/1,2,3")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader<[FeedCharacter]>, client: HTTPClientSpy) {
+    override func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/character/1,2,3")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader<[CharacterModel]>, client: HTTPClientSpy) {
         super.makeSUT(url: url, file: file, line: line)
     }
     
@@ -81,9 +81,9 @@ class LoadMultipleCharacterFromRemoteUseTestCase: NetworkTestCase<[FeedCharacter
         return try! JSONSerialization.data(withJSONObject: json)
     }
     
-    func makeSingleCharacter(id: Int, name: String, status: String, species: String = "", type: String = "", gender: String = "", origin: FeedCharacter.Direction = FeedCharacter.Direction(name: "", url: ""), location: FeedCharacter.Direction = FeedCharacter.Direction(name: "", url: ""), image: String, episode: [String] = [], url: String, created: String = "") -> (model: FeedCharacter, json: [String: Any]) {
+    func makeSingleCharacter(id: Int, name: String, status: String, species: String = "", type: String = "", gender: String = "", origin: CharacterModel.Direction = CharacterModel.Direction(name: "", url: ""), location: CharacterModel.Direction = CharacterModel.Direction(name: "", url: ""), image: String, episode: [String] = [], url: String, created: String = "") -> (model: CharacterModel, json: [String: Any]) {
         
-        let character = FeedCharacter(id: id, name: name, status: status, species: species, type: type, gender: gender, origin: origin, location: location, image: image, episode: episode, url: url, created: created)
+        let character = CharacterModel(id: id, name: name, status: status, species: species, type: type, gender: gender, origin: origin, location: location, image: image, episode: episode, url: url, created: created)
         
         let jsonOrigin = [
             "name": origin.name,

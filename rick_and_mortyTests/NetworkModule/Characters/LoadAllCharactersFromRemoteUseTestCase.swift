@@ -1,14 +1,14 @@
 //
-//  NetworkModule.swift
+//  LoadAllCharactersFromRemoteUseTestCase.swift
 //  rick_and_mortyTests
 //
-//  Created by Sonic on 21/2/23.
+//  Created by Sonic on 23/2/23.
 //
 
 import XCTest
 @testable import rick_and_morty
 
-class LoadSingleCharacterFromRemoteUseTestCase: NetworkTestCase<FeedCharacter> {
+class LoadAllCharactersFromRemoteUseTestCase: NetworkTestCase<AllCharacterModel> {
     
     func test_singleCharacter_doesNotRequestDataFromURL() {
         let (_, client) = makeSUT()
@@ -60,22 +60,24 @@ class LoadSingleCharacterFromRemoteUseTestCase: NetworkTestCase<FeedCharacter> {
     func test_singleCharacter_loadDeliversSuccessWithNoItemsOn200HTTPResponseWithJSONItems() {
         let (sut, client) = makeSUT()
         
-        let character = makeSingleCharacter(id: 2, name: "Morty Smith", status: "Alive", species: "Human", gender: "Male", origin: FeedCharacter.Direction(name: "unknown", url: ""), location: FeedCharacter.Direction(name: "Citadel of Ricks", url: "https://rickandmortyapi.com/api/location/3"), image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg", episode: ["https://rickandmortyapi.com/api/episode/1", "https://rickandmortyapi.com/api/episode/1"], url: "https://rickandmortyapi.com/api/character/2", created: "2017-11-04T18:50:21.651Z")
+        let root = makeRootCharacter(id: 2, name: "Morty Smith", status: "Alive", species: "Human", gender: "Male", origin: CharacterModel.Direction(name: "unknown", url: ""), location: CharacterModel.Direction(name: "Citadel of Ricks", url: "https://rickandmortyapi.com/api/location/3"), image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg", episode: ["https://rickandmortyapi.com/api/episode/1", "https://rickandmortyapi.com/api/episode/1"], url: "https://rickandmortyapi.com/api/character/2", created: "2017-11-04T18:50:21.651Z")
         
-        expect(sut, toCompleteWith: .success(character.model), when: {
-            let json = makecharacterJSON(character.json)
+        expect(sut, toCompleteWith: .success(root.model), when: {
+            let json = makecharacterJSON(root.json)
             client.complete(withStatusCode: 200, data: json)
         })
     }
     
     // MARK: Helpers
-    override func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/character/3")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader<FeedCharacter>, client: HTTPClientSpy) {
+    override func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/character/3")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader<AllCharacterModel>, client: HTTPClientSpy) {
         super.makeSUT(url: url, file: file, line: line)
     }
     
-    func makeSingleCharacter(id: Int, name: String, status: String, species: String = "", type: String = "", gender: String = "", origin: FeedCharacter.Direction = FeedCharacter.Direction(name: "", url: ""), location: FeedCharacter.Direction = FeedCharacter.Direction(name: "", url: ""), image: String, episode: [String] = [], url: String, created: String = "") -> (model: FeedCharacter, json: [String: Any]) {
+    func makeRootCharacter(id: Int, name: String, status: String, species: String = "", type: String = "", gender: String = "", origin: CharacterModel.Direction = CharacterModel.Direction(name: "", url: ""), location: CharacterModel.Direction = CharacterModel.Direction(name: "", url: ""), image: String, episode: [String] = [], url: String, created: String = "") -> (model: AllCharacterModel, json: [String: Any]) {
         
-        let character = FeedCharacter(id: id, name: name, status: status, species: species, type: type, gender: gender, origin: origin, location: location, image: image, episode: episode, url: url, created: created)
+        let character = CharacterModel(id: id, name: name, status: status, species: species, type: type, gender: gender, origin: origin, location: location, image: image, episode: episode, url: url, created: created)
+        
+        let root: AllCharacterModel = AllCharacterModel(results: [character, character])
         
         let jsonOrigin = [
             "name": origin.name,
@@ -85,7 +87,8 @@ class LoadSingleCharacterFromRemoteUseTestCase: NetworkTestCase<FeedCharacter> {
             "name": location.name,
             "url": location.url
         ]
-        let json : [String: Any]  = [
+        
+        let char : [String: Any]  = [
             "id": id,
             "name": name,
             "status": status,
@@ -98,8 +101,12 @@ class LoadSingleCharacterFromRemoteUseTestCase: NetworkTestCase<FeedCharacter> {
             "episode": episode,
             "url": url,
             "created": created
+        ]
+        
+        let json : [String: Any]  = [
+            "results": [char, char]
         ].compactMapValues{ $0 }
         
-        return (character, json)
+        return (root, json)
     }
 }

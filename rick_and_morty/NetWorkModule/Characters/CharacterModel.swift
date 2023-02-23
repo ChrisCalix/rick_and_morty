@@ -1,5 +1,5 @@
 //
-//  FeedCharacter.swift
+//  CharacterModel.swift
 //  rick_and_morty
 //
 //  Created by Sonic on 23/2/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FeedCharacter : Decodable, Equatable, Identifiable {
+struct CharacterModel : Decodable, Equatable, Identifiable {
     ///id    int    The id of the character.
     let id: Int
     ///name    string    The name of the character.

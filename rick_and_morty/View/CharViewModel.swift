@@ -8,10 +8,10 @@
 import Foundation
 
 class CharViewModel: ObservableObject {
-    @Published var char : [FeedCharacter] = []
+    @Published var char : [CharacterModel] = []
     
     init () {
-        let remote = RemoteFeedLoader<[FeedCharacter]>(url: URL(string: "https://rickandmortyapi.com/api/character/1,2,3")!, client: APIService())
+        let remote = RemoteFeedLoader<[CharacterModel]>(url: URL(string: "https://rickandmortyapi.com/api/character/1,2,3")!, client: APIService())
         remote.load() { [weak self] result in
             guard let self else { return }
             switch result {
