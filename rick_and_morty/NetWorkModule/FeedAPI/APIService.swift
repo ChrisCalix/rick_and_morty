@@ -7,9 +7,6 @@
 
 import Foundation
 
-enum APIError : Error {
-    case notHttpURLResponse
-}
 
 final class APIService: HTTPClient {
     
@@ -17,7 +14,7 @@ final class APIService: HTTPClient {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             do {
                 guard let httpResponse = response as? HTTPURLResponse, let data else {
-                    throw APIError.notHttpURLResponse
+                    throw HTTPError.notHttpURLResponse
                 }
 
                 completion(.success((data, httpResponse)))

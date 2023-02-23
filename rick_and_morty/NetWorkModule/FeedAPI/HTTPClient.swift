@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum HTTPError : Error {
+    case notHttpURLResponse
+}
+
 protocol HTTPClient {
     typealias Result = Swift.Result<(Data, HTTPURLResponse), Error>
     
