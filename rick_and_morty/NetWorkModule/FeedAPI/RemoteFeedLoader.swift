@@ -22,7 +22,7 @@ class RemoteFeedLoader: FeedLoader {
         self.client = client
     }
     
-    func load(completion: @escaping (FeedLoader.Result) -> Void) {
+    func loadSingleCharacter(completion: @escaping (FeedLoader.SingleResult) -> Void) {
         client.get(from: url) { result in
             switch result {
             case let .success((data, response)):
@@ -31,5 +31,16 @@ class RemoteFeedLoader: FeedLoader {
                 completion(.failure(Error.connectivity))
             }
         }
+    }
+    
+    func loadMultipleCharacters(completion: @escaping (FeedLoader.MultipleResult) -> Void) {
+//        client.get(from: url) { result in
+//            switch result {
+//            case let .success((data, response)):
+//                completion(FeedCharacterMapper.map(data, response: response))
+//            case .failure:
+//                completion(.failure(Error.connectivity))
+//            }
+//        }
     }
 }

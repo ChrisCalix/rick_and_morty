@@ -8,7 +8,9 @@
 import Foundation
 
 protocol FeedLoader {
-    typealias Result = Swift.Result<FeedCharacter, Error>
+    typealias SingleResult = Swift.Result<FeedCharacter, Error>
+    typealias MultipleResult = Swift.Result<[FeedCharacter], Error>
     
-    func load(completion: @escaping (Result) -> Void)
+    func loadSingleCharacter(completion: @escaping (SingleResult) -> Void)
+    func loadMultipleCharacters(completion: @escaping (MultipleResult) -> Void)
 }

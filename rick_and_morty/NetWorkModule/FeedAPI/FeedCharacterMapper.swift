@@ -51,7 +51,7 @@ enum FeedCharacterMapper {
     
     private static let OK_200: Int = 200
     
-    static func map(_ data: Data, response: HTTPURLResponse) -> RemoteFeedLoader.Result {
+    static func map(_ data: Data, response: HTTPURLResponse) -> RemoteFeedLoader.SingleResult {
         guard response.statusCode == OK_200, let root = try? JSONDecoder().decode(Root.self, from: data) else {
             return .failure(RemoteFeedLoader.Error.invalidData)
         }

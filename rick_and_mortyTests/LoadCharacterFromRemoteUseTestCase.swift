@@ -20,8 +20,8 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
         let url = URL(string: "https://rickandmortyapi.com/api/character/3")!
         let (sut, client) = makeSUT(url: url)
 
-        sut.load { _ in }
-        sut.load { _ in }
+        sut.loadSingleCharacter { _ in }
+        sut.loadSingleCharacter { _ in }
 
         XCTAssertEqual(client.requestedURLs, [url, url])
     }
@@ -67,20 +67,7 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
             client.complete(withStatusCode: 200, data: json)
         })
     }
-    
-//    func test_load_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
-//        let url = URL(string: "https://rickandmortyapi.com/api/character/3")!
-//        let client = HTTPClientSpy()
-//        var sut: RemoteFeedLoader? = RemoteFeedLoader(url: url, client: client)
-//
-//        var capturedResult : RemoteFeedLoader.Result?
-//        sut?.load { capturedResult = $0 }
-//
-//        sut = nil
-//        client.complete(withStatusCode: 200, data: makeItemsJSON())
-//        XCTAssertNil(capturedResult)
-//    }
-    
+
     //MARK: Helpers
     private func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/character/3")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
@@ -127,7 +114,7 @@ class LoadCharacterFromRemoteUseTestCase: XCTestCase {
     func expect(_ sut: RemoteFeedLoader, toCompleteWith expectedResult: Result<FeedCharacter, RemoteFeedLoader.Error>, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
         let exp = expectation(description: "Wait for load completion")
         
-        sut.load { receivedResult in
+        sut.loadSingleCharacter { receivedResult in
             switch (receivedResult, expectedResult) {
             case let (.success(receivedChar), .success(expectedChar)):
                 XCTAssertEqual(receivedChar, expectedChar, file: file, line: line)
