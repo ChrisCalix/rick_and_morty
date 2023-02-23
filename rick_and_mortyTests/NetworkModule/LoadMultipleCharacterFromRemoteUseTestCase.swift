@@ -48,6 +48,15 @@ class LoadMultipleCharacterFromRemoteUseTestCase: XCTestCase {
         }
     }
     
+    func test_singleCharacter_loadDeliversInvalidDataErrorOn200HTTPResponseWithinvalidJSON() {
+        let (sut, client) = makeSUT()
+
+        expect(sut, toCompleteWith: .failure(.invalidData), when: {
+            let invalidJSON = Data("invalid JSON".utf8)
+            client.complete(withStatusCode: 200, data: invalidJSON)
+        })
+    }
+    
     //MARK: Helpers
     private func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/character/1,2,3")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader<[FeedCharacter]>, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
