@@ -8,7 +8,7 @@
 import XCTest
 @testable import rick_and_morty
 
-class LoadMultipleCharacterFromRemoteUseTestCase: XCTestCase {
+class LoadMultipleCharacterFromRemoteUseTestCase: NetworkTestCase<[FeedCharacter]> {
 
     func test_multipleCharacter_doesNotRequestDataFromURL() {
         let (_, client) = makeSUT()
@@ -72,62 +72,7 @@ class LoadMultipleCharacterFromRemoteUseTestCase: XCTestCase {
     }
     
     //MARK: Helpers
-    private func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/character/1,2,3")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader<[FeedCharacter]>, client: HTTPClientSpy) {
-        let client = HTTPClientSpy()
-        let sut = RemoteFeedLoader<[FeedCharacter]>(url: url, client: client)
-        trackForMemoryLeaks(sut, file: file, line: line)
-        trackForMemoryLeaks(client, file: file, line: line)
-        return (sut, client)
-    }
-    
-    func expect(_ sut: RemoteFeedLoader<[FeedCharacter]>, toCompleteWith expectedResult: Result<[FeedCharacter], RemoteFeedLoader<[FeedCharacter]>.Error>, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
-        let exp = expectation(description: "Wait for load completion")
-        
-        sut.load { receivedResult in
-            switch (receivedResult, expectedResult) {
-            case let (.success(receivedChar), .success(expectedChar)):
-                XCTAssertEqual(receivedChar, expectedChar, file: file, line: line)
-            case let (.failure(receivedError as RemoteFeedLoader<[FeedCharacter]>.Error), .failure(expectedError)):
-                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
-            default:
-                XCTFail("Expected result \(expectedResult) got \(receivedResult) instead", file: file, line: line)
-            }
-            
-            exp.fulfill()
-        }
-        
-        action()
-        
-        waitForExpectations(timeout: 0.1)
-    }
-    
-    private func makeSingleCharacter(id: Int, name: String, status: String, species: String = "", type: String = "", gender: String = "", origin: FeedCharacter.Direction = FeedCharacter.Direction(name: "", url: ""), location: FeedCharacter.Direction = FeedCharacter.Direction(name: "", url: ""), image: String, episode: [String] = [], url: String, created: String = "") -> (model: FeedCharacter, json: [String: Any]) {
-        
-        let character = FeedCharacter(id: id, name: name, status: status, species: species, type: type, gender: gender, origin: origin, location: location, image: image, episode: episode, url: url, created: created)
-        
-        let jsonOrigin = [
-            "name": origin.name,
-            "url": origin.url
-        ]
-        let jsonLocation = [
-            "name": location.name,
-            "url": location.url
-        ]
-        let json : [String: Any]  = [
-            "id": id,
-            "name": name,
-            "status": status,
-            "species": species,
-            "type": type,
-            "gender": gender,
-            "origin": jsonOrigin,
-            "location": jsonLocation,
-            "image": image,
-            "episode": episode,
-            "url": url,
-            "created": created
-        ].compactMapValues{ $0 }
-        
-        return (character, json)
+    override func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/character/1,2,3")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader<[FeedCharacter]>, client: HTTPClientSpy) {
+        super.makeSUT(url: url, file: file, line: line)
     }
 }
