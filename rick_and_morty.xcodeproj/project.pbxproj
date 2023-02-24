@@ -102,7 +102,6 @@
 			children = (
 				C3D598D129A575A00069B505 /* rick_and_mortyApp.swift */,
 				C3D598D329A575A00069B505 /* ContentView.swift */,
-				C3A63B0C29A7D81900B56D98 /* CharViewModel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -128,6 +127,23 @@
 			path = Characters;
 			sourceTree = "<group>";
 		};
+		C3A63B1C29A835BD00B56D98 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C3A63B0E29A8113E00B56D98 /* AllCharacterModel.swift */,
+				C34B4A4429A7B72E002C57D1 /* CharacterModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C3A63B1E29A835F200B56D98 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C3A63B0C29A7D81900B56D98 /* CharViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		C3D598C529A575A00069B505 = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +167,8 @@
 		C3D598D029A575A00069B505 /* rick_and_morty */ = {
 			isa = PBXGroup;
 			children = (
+				C3A63B1E29A835F200B56D98 /* ViewModel */,
+				C3A63B1C29A835BD00B56D98 /* Model */,
 				C34B4A4329A7B6F1002C57D1 /* View */,
 				C3D598FF29A5C9290069B505 /* NetWorkModule */,
 				C3D598D529A575A20069B505 /* Assets.xcassets */,
@@ -196,9 +214,7 @@
 		C3D5990029A5C9320069B505 /* Characters */ = {
 			isa = PBXGroup;
 			children = (
-				C34B4A4429A7B72E002C57D1 /* CharacterModel.swift */,
 				C34B4A4B29A7B7E9002C57D1 /* FeedLoader.swift */,
-				C3A63B0E29A8113E00B56D98 /* AllCharacterModel.swift */,
 			);
 			path = Characters;
 			sourceTree = "<group>";
