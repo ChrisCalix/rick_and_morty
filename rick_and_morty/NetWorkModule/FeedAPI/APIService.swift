@@ -10,7 +10,12 @@ import Foundation
 final class APIService: HTTPClient {
     
     func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+        
+        let configuration = URLSessionConfiguration.default
+        configuration.requestCachePolicy = .returnCacheDataElseLoad
+        let urlSession = URLSession(configuration: configuration)
+        
+        let task = urlSession.dataTask(with: url) { data, response, error in
             if let error  {
                 completion(.failure(error))
                 return

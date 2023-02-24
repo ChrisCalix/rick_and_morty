@@ -11,18 +11,19 @@ struct CharactersSlideView: View {
     @ObservedObject var viewModel: CharacterViewModel
     
     var body: some View {
-        ZStack {
-            if !viewModel.characters.isEmpty  {
-                PaintingScrollView(from: viewModel)
-                    .offset(y: -25)
+        NavigationView {
+            ZStack {
+                if !viewModel.characters.isEmpty  {
+                    PaintingScrollView(from: viewModel)
+                        .offset(y: -25)
+                }
+            }
+            .background(Color.black.edgesIgnoringSafeArea(.all))
+            .edgesIgnoringSafeArea(.all)
+            .onAppear{
+                viewModel.getAllCharacters()
             }
         }
-        .background(Color.black.edgesIgnoringSafeArea(.all))
-        .edgesIgnoringSafeArea(.all)
-        .onAppear{
-            viewModel.getAllCharacters()
-        }
-        
     }
     
     init(from viewModel: CharacterViewModel) {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CharacterOptionsView: View {
-    @State var viewModel: CharacterViewModel
+    @ObservedObject var viewModel: CharacterViewModel
     @State var idCharacter: Int
     let foreGroundColors: Color
     let backgroundColors: Color
@@ -36,13 +36,23 @@ struct CharacterOptionsView: View {
                 .tint(backgroundColors.opacity(0.8))
                 
                 Button {
-                    
+                    viewModel.getCharacterDescription(id: idCharacter)
                 } label: {
-                    Text("EPISODIOS")
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(foreGroundColors)
-                        .fontWeight(.bold )
-                        .padding(.all)
+                    if let charSelected = viewModel.characterDetail, let url = URL(string: charSelected.location.url) {
+                        NavigationLink(destination: LocationView(from: LocationViewModel(), urlLocation: url)) {
+                            Text("LOCATIONS")
+                                .frame(maxWidth: .infinity)
+                                .foregroundColor(foreGroundColors)
+                                .fontWeight(.bold )
+                                .padding(.all)
+                        }
+                    } else {
+                        Text("LOCATIONS")
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(foreGroundColors)
+                            .fontWeight(.bold )
+                            .padding(.all)
+                    }
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(backgroundColors.opacity(0.8))
@@ -51,6 +61,9 @@ struct CharacterOptionsView: View {
                 
             }
             .padding(.bottom, 50)
+        }
+        .onAppear {
+            viewModel.getCharacterDescription(id: idCharacter)
         }
     }
     

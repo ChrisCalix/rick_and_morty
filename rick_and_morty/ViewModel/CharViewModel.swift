@@ -22,7 +22,7 @@ class CharacterViewModel: ObservableObject {
     func getCharacterDescription(id: Int) {
         characterDetail = characters
             .lazy
-            .filter({ $0.id == id})
+            .filter({ $0.id == id })
             .first
     }
     
