@@ -9,6 +9,7 @@ import Foundation
 
 class LocationViewModel: ObservableObject {
     @Published var location : LocationModel?
+    @Published var showAlert: Bool = false
     
     func loadSingleLocation(url: URL) {
         let remote = RemoteFeedLoader<LocationModel>(url: url, client: APIService())
@@ -19,10 +20,8 @@ class LocationViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.location = feed
                 }
-                
-                print("succes \(feed)")
-            case let .failure(error):
-                print("error \(error)")
+            case .failure(_):
+                self.showAlert = true
             }
         }
     }

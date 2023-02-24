@@ -44,6 +44,9 @@ struct LocationView: View {
         .onAppear() {
             viewModel.loadSingleLocation(url: urlLocation)
         }
+        .alert("We have a rarely issue, please try again!", isPresented: $viewModel.showAlert) {
+            
+        }
         
     }
     
