@@ -60,7 +60,7 @@ class LoadSingleCharacterFromRemoteUseTestCase: NetworkTestCase<CharacterModel> 
     func test_singleCharacter_loadDeliversSuccessWithNoItemsOn200HTTPResponseWithJSONItems() {
         let (sut, client) = makeSUT()
         
-        let character = makeSingleCharacter(id: 2, name: "Morty Smith", status: "Alive", species: "Human", gender: "Male", origin: CharacterModel.Direction(name: "unknown", url: ""), location: CharacterModel.Direction(name: "Citadel of Ricks", url: "https://rickandmortyapi.com/api/location/3"), image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg", episode: ["https://rickandmortyapi.com/api/episode/1", "https://rickandmortyapi.com/api/episode/1"], url: "https://rickandmortyapi.com/api/character/2", created: "2017-11-04T18:50:21.651Z")
+        let character = makeSingleCharacter()
         
         expect(sut, toCompleteWith: .success(character.model), when: {
             let json = makecharacterJSON(character.json)
@@ -73,31 +73,31 @@ class LoadSingleCharacterFromRemoteUseTestCase: NetworkTestCase<CharacterModel> 
         super.makeSUT(url: url, file: file, line: line)
     }
     
-    func makeSingleCharacter(id: Int, name: String, status: String, species: String = "", type: String = "", gender: String = "", origin: CharacterModel.Direction = CharacterModel.Direction(name: "", url: ""), location: CharacterModel.Direction = CharacterModel.Direction(name: "", url: ""), image: String, episode: [String] = [], url: String, created: String = "") -> (model: CharacterModel, json: [String: Any]) {
+    func makeSingleCharacter() -> (model: CharacterModel, json: [String: Any]) {
         
-        let character = CharacterModel(id: id, name: name, status: status, species: species, type: type, gender: gender, origin: origin, location: location, image: image, episode: episode, url: url, created: created)
+        let character = CharacterModel(id: 2, name: "Morty Smith", status: "Alive", species: "Human", type: "Alien", gender: "Male", origin: CharacterModel.Direction(name: "unknown", url: ""), location: CharacterModel.Direction(name: "Citadel of Ricks", url: "https://rickandmortyapi.com/api/location/3"), image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg", episode: ["https://rickandmortyapi.com/api/episode/1", "https://rickandmortyapi.com/api/episode/1"], url: "https://rickandmortyapi.com/api/character/2", created: "2017-11-04T18:50:21.651Z")
         
         let jsonOrigin = [
-            "name": origin.name,
-            "url": origin.url
+            "name": character.origin.name,
+            "url": character.origin.url
         ]
         let jsonLocation = [
-            "name": location.name,
-            "url": location.url
+            "name": character.location.name,
+            "url": character.location.url
         ]
         let json : [String: Any]  = [
-            "id": id,
-            "name": name,
-            "status": status,
-            "species": species,
-            "type": type,
-            "gender": gender,
+            "id": character.id,
+            "name": character.name,
+            "status": character.status,
+            "species": character.species,
+            "type": character.type,
+            "gender": character.gender,
             "origin": jsonOrigin,
             "location": jsonLocation,
-            "image": image,
-            "episode": episode,
-            "url": url,
-            "created": created
+            "image": character.image,
+            "episode": character.episode,
+            "url": character.url,
+            "created": character.created
         ].compactMapValues{ $0 }
         
         return (character, json)
