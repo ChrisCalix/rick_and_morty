@@ -11,14 +11,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "static FeedCharacterMapper.map(_:response:):RemoteFeedLoader.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "String(decoding: data, as: UTF8.self)">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "closure #1 in RemoteFeedLoader.load(completion:):RemoteFeedLoader.swift">
          <PersistentStrings>
             <PersistentString
@@ -26,6 +18,22 @@
             </PersistentString>
             <PersistentString
                value = "FeedCharacterMapper.map(data, response: response)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "CharacterViewModel.getCharacterDescription(id:):CharViewModel.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = " characters.lazy.filter({ $0.id == id }).first">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "static FeedCharacterMapper.map(_:response:):RemoteFeedLoader.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "String(decoding: data, as: UTF8.self)">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

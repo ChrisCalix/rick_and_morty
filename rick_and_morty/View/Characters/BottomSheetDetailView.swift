@@ -54,22 +54,26 @@ struct BottomSheetDetailView: View {
                             Spacer(minLength: 5)
                         }
                         
-                        HStack(spacing: 20) {
-                            Spacer(minLength: 5)
-                            Text("Origin:")
-                                .frame(maxWidth: .infinity)
-                            Text(characterSelected.origin.name)
-                                .frame(maxWidth: .infinity)
-                            Spacer(minLength: 5)
+                        if !characterSelected.origin.name.isEmpty {
+                            HStack(spacing: 20) {
+                                Spacer(minLength: 5)
+                                Text("Origin:")
+                                    .frame(maxWidth: .infinity)
+                                Text(characterSelected.origin.name)
+                                    .frame(maxWidth: .infinity)
+                                Spacer(minLength: 5)
+                            }
                         }
                         
-                        HStack(spacing: 20) {
-                            Spacer(minLength: 5)
-                            Text("Location:")
-                                .frame(maxWidth: .infinity)
-                            Text(characterSelected.location.name)
-                                .frame(maxWidth: .infinity)
-                            Spacer(minLength: 5)
+                        if !characterSelected.location.name.isEmpty {
+                            HStack(spacing: 20) {
+                                Spacer(minLength: 5)
+                                Text("Location:")
+                                    .frame(maxWidth: .infinity)
+                                Text(characterSelected.location.name)
+                                    .frame(maxWidth: .infinity)
+                                Spacer(minLength: 5)
+                            }
                         }
 
                     }.padding(.vertical, 10)

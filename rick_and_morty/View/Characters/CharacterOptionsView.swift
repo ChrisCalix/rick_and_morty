@@ -14,63 +14,57 @@ struct CharacterOptionsView: View {
     let backgroundColors: Color
     
     var body: some View {
-            VStack {
+        VStack {
+            
+            Spacer()
+            
+            HStack(spacing: 20) {
                 
-                Spacer()
+                Spacer(minLength: 5)
                 
-                HStack(spacing: 20) {
-                    
-                    Spacer(minLength: 5)
-                    
-                    Button {
-                        viewModel.toogleDetailState()
-                        viewModel.getCharacterDescription(id: idCharacter)
-                    } label: {
-                        Text("DETALLES")
+                Button {
+                    viewModel.toogleDetailState()
+                    viewModel.getCharacterDescription(id: idCharacter)
+                } label: {
+                    Text("DETALLES")
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(foreGroundColors)
+                        .fontWeight(.bold)
+                        .padding(.all)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(backgroundColors.opacity(0.8))
+                
+                Button {
+                    viewModel.getCharacterDescription(id: idCharacter)
+                } label: {
+                    if let charSelected = viewModel.characterDetail, let url = URL(string: charSelected.location.url) {
+                        NavigationLink(destination: LocationView(from: LocationViewModel(), urlLocation: url)) {
+                            Text("LOCATIONS")
+                                .frame(maxWidth: .infinity)
+                                .foregroundColor(foreGroundColors)
+                                .fontWeight(.bold )
+                                .padding(.all)
+                        }
+                    } else {
+                        Text("LOCATIONS")
                             .frame(maxWidth: .infinity)
                             .foregroundColor(foreGroundColors)
-                            .fontWeight(.bold)
+                            .fontWeight(.bold )
                             .padding(.all)
                     }
-                    .buttonStyle(.borderedProminent)
-                    .tint(backgroundColors.opacity(0.8))
-                    
-                    
-                    Button {
-                        viewModel.getCharacterDescription(id: idCharacter)
-                    } label: {
-                        if let charSelected = viewModel.characterDetail {
-                            NavigationLink(destination: LocationView(from: LocationViewModel(), urlLocation: URL(string: charSelected.location.url)!)) {
-        //                        viewModel.getCharacterDescription(id: idCharacter)
-                                
-                                Text("LOCATIONS")
-                                    .frame(maxWidth: .infinity)
-                                    .foregroundColor(foreGroundColors)
-                                    .fontWeight(.bold )
-                                    .padding(.all)
-                            }
-                        }
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(backgroundColors.opacity(0.8))
-                    
-//                        Button {
-//                            
-//                        } label: {
-//                            
-//                        }
-//                        .buttonStyle(.borderedProminent)
-//                        .tint(backgroundColors.opacity(0.8))
-                    
-                    Spacer(minLength: 5)
-                    
                 }
-                .padding(.bottom, 50)
+                .buttonStyle(.borderedProminent)
+                .tint(backgroundColors.opacity(0.8))
+                
+                Spacer(minLength: 5)
+                
             }
-            .onAppear {
-                viewModel.getCharacterDescription(id: idCharacter)
-            }
-        
+            .padding(.bottom, 50)
+        }
+        .onAppear {
+            viewModel.getCharacterDescription(id: idCharacter)
+        }
     }
     
     init(from viewModel: CharacterViewModel, idCharacter: Int, foreGroundColors: Color, backgroundColors: Color) {
