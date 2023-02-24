@@ -10,6 +10,7 @@ import SwiftUI
 struct CharactersSlideView: View {
     @ObservedObject var viewModel: CharacterViewModel
     
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -24,6 +25,9 @@ struct CharactersSlideView: View {
                 viewModel.getAllCharacters()
             }
         }
+        .alert("Un error inesperado ah ocurrido xfavor intente denuevo", isPresented: $viewModel.showAlert,  actions: {
+            
+        })
     }
     
     init(from viewModel: CharacterViewModel) {

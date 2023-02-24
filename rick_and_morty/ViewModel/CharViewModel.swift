@@ -12,6 +12,7 @@ class CharacterViewModel: ObservableObject {
     @Published var characters : [CharacterModel] = []
     @Published var showingBottomDetailSheet: Bool = false
     @Published var characterDetail: CharacterModel?
+    @Published var showAlert: Bool = false
     
     init () { }
     
@@ -35,10 +36,10 @@ class CharacterViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.characters = feed.results
                 }
-                
-                print("succes \(feed)")
-            case let .failure(error):
-                print("error \(error)")
+            case .failure(_):
+                DispatchQueue.main.async {
+                    self.showAlert = true
+                }
             }
         }
     }
@@ -52,10 +53,10 @@ class CharacterViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.characters = feed
                 }
-                
-                print("succes \(feed)")
-            case let .failure(error):
-                print("error \(error)")
+            case  .failure(_):
+                DispatchQueue.main.async {
+                    self.showAlert = true
+                }
             }
         }
     }
@@ -70,10 +71,10 @@ class CharacterViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.characters = feed
                 }
-                
-                print("succes \(feed)")
-            case let .failure(error):
-                print("error \(error)")
+            case .failure(_):
+                DispatchQueue.main.async {
+                    self.showAlert = true
+                }
             }
         }
     }
