@@ -16,7 +16,7 @@ class LoadAllCharactersFromRemoteUseTestCase: NetworkTestCase<AllCharacterModel>
         XCTAssertTrue(client.requestedURLs.isEmpty)
     }
 
-    func test_singleCharacter_loadTwiceRequestDataFromURLTwice() {
+    func test_allCharacter_loadTwiceRequestDataFromURLTwice() {
         let url = URL(string: "https://rickandmortyapi.com/api/character/3")!
         let (sut, client) = makeSUT(url: url)
 
@@ -26,7 +26,7 @@ class LoadAllCharactersFromRemoteUseTestCase: NetworkTestCase<AllCharacterModel>
         XCTAssertEqual(client.requestedURLs, [url, url])
     }
 
-    func test_singleCharacter_loadDeliversConnectivityErrorOnClientError() {
+    func test_allCharacter_loadDeliversConnectivityErrorOnClientError() {
         let (sut, client) = makeSUT()
         
         expect(sut, toCompleteWith: .failure(.connectivity), when: {
@@ -35,7 +35,7 @@ class LoadAllCharactersFromRemoteUseTestCase: NetworkTestCase<AllCharacterModel>
         })
     }
 
-    func test_singleCharacter_loadDeliversInvalidDataErrorOnNon200HTTPResponse() {
+    func test_allCharacter_loadDeliversInvalidDataErrorOnNon200HTTPResponse() {
         let (sut, client) = makeSUT()
 
         let samples = [199, 201, 300, 400, 500]
@@ -48,7 +48,7 @@ class LoadAllCharactersFromRemoteUseTestCase: NetworkTestCase<AllCharacterModel>
         }
     }
 
-    func test_singleCharacter_loadDeliversInvalidDataErrorOn200HTTPResponseWithinvalidJSON() {
+    func test_allCharacter_loadDeliversInvalidDataErrorOn200HTTPResponseWithinvalidJSON() {
         let (sut, client) = makeSUT()
 
         expect(sut, toCompleteWith: .failure(.invalidData), when: {
@@ -57,7 +57,7 @@ class LoadAllCharactersFromRemoteUseTestCase: NetworkTestCase<AllCharacterModel>
         })
     }
     
-    func test_singleCharacter_loadDeliversSuccessWithNoItemsOn200HTTPResponseWithJSONItems() {
+    func test_allCharacter_loadDeliversSuccessWithNoItemsOn200HTTPResponseWithJSONItems() {
         let (sut, client) = makeSUT()
         
         let root = makeRootCharacter(id: 2, name: "Morty Smith", status: "Alive", species: "Human", gender: "Male", origin: CharacterModel.Direction(name: "unknown", url: ""), location: CharacterModel.Direction(name: "Citadel of Ricks", url: "https://rickandmortyapi.com/api/location/3"), image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg", episode: ["https://rickandmortyapi.com/api/episode/1", "https://rickandmortyapi.com/api/episode/1"], url: "https://rickandmortyapi.com/api/character/2", created: "2017-11-04T18:50:21.651Z")
