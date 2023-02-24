@@ -24,9 +24,12 @@ struct PaintingView: View {
                     CharacterOptionsView(from: viewModel, idCharacter: character.id, foreGroundColors: .black.opacity(0.8), backgroundColors: .white)
                 }
                 .sheet(isPresented: $viewModel.showingBottomDetailSheet) {
-                    BottomSheetDetailView(from: viewModel)
-                        .presentationDetents([.height(110), .height(300)])
-                        .presentationDragIndicator(.visible)
+                    withAnimation {
+                        BottomSheetDetailView(from: viewModel)
+                            .presentationDetents([.height(110), .height(300)])
+                            .presentationDragIndicator(.visible)
+                    }
+                   
                 }
             }
         }

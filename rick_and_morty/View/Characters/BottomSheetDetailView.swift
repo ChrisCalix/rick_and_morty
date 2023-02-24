@@ -71,18 +71,6 @@ struct BottomSheetDetailView: View {
                                 .frame(maxWidth: .infinity)
                             Spacer(minLength: 5)
                         }
-                        
-                        Button {
-                            
-                        } label: {
-                            Text("Ir a La ubicacion")
-                                .foregroundColor(.white)
-                                .padding(.horizontal)
-                                .font(.body)
-                                .fontWeight(.medium)
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .tint(Color.cyan)
 
                     }.padding(.vertical, 10)
                     
