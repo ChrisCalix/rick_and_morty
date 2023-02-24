@@ -7,17 +7,33 @@
 
 import Foundation
 
-class CharViewModel: ObservableObject {
-    @Published var char : [CharacterModel] = []
+class CharacterViewModel: ObservableObject {
     
-    init () {
-        let remote = RemoteFeedLoader<[CharacterModel]>(url: URL(string: "https://rickandmortyapi.com/api/character/1,2,3")!, client: APIService())
+    @Published var characters : [CharacterModel] = []
+    @Published var showingBottomDetailSheet: Bool = false
+    @Published var characterDetail: CharacterModel?
+    
+    init () { }
+    
+    func toogleDetailState() {
+        showingBottomDetailSheet.toggle()
+    }
+    
+    func getCharacterDescription(id: Int) {
+        characterDetail = characters
+            .lazy
+            .filter({ $0.id == id})
+            .first
+    }
+    
+    func getAllCharacters() {
+        let remote = RemoteFeedLoader<AllCharacterModel>(url: URL(string: "https://rickandmortyapi.com/api/character")!, client: APIService())
         remote.load() { [weak self] result in
             guard let self else { return }
             switch result {
             case let .success(feed):
                 DispatchQueue.main.async {
-                    self.char = feed
+                    self.characters = feed.results
                 }
                 
                 print("succes \(feed)")
@@ -27,4 +43,39 @@ class CharViewModel: ObservableObject {
         }
     }
 
+    func getSingleCharacter(id: Int) {
+        let remote = RemoteFeedLoader<[CharacterModel]>(url: URL(string: "https://rickandmortyapi.com/api/character/\(id)")!, client: APIService())
+        remote.load() { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case let .success(feed):
+                DispatchQueue.main.async {
+                    self.characters = feed
+                }
+                
+                print("succes \(feed)")
+            case let .failure(error):
+                print("error \(error)")
+            }
+        }
+    }
+    
+    func getMultipleCharacter(ids: [Int]) {
+        let strIds = ids.map { String($0) }.joined(separator: ", ")
+        let remote = RemoteFeedLoader<[CharacterModel]>(url: URL(string: "https://rickandmortyapi.com/api/character/\(strIds)")!, client: APIService())
+        remote.load() { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case let .success(feed):
+                DispatchQueue.main.async {
+                    self.characters = feed
+                }
+                
+                print("succes \(feed)")
+            case let .failure(error):
+                print("error \(error)")
+            }
+        }
+    }
 }
+

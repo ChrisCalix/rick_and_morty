@@ -11,21 +11,23 @@ final class APIService: HTTPClient {
     
     func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            do {
-                guard let httpResponse = response as? HTTPURLResponse, let data else {
-                    throw HTTPError.notHttpURLResponse
-                }
-
-                completion(.success((data, httpResponse)))
-            }catch {
+            if let error  {
                 completion(.failure(error))
+                return
             }
+            
+            guard let httpResponse = response as? HTTPURLResponse, let data else {
+                completion(.failure(HTTPError.dataInvalid))
+                return
+            }
+
+            completion(.success((data, httpResponse)))
         }
 
         task.resume()
     }
     
     enum HTTPError : Error {
-        case notHttpURLResponse
+        case dataInvalid
     }
 }
