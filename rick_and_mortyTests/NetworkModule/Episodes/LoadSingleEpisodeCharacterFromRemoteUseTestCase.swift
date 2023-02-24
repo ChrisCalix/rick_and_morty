@@ -10,4 +10,54 @@ import XCTest
 
 class LoadSingleEpisodeCharacterFromRemoteUseTestCase: NetworkTestCase<EpisodeModel> {
     
+    func test_singleEpisode_doesNotRequestDataFromURL() {
+        let (_, client) = makeSUT()
+
+        XCTAssertTrue(client.requestedURLs.isEmpty)
+    }
+    
+    func test_singleEpisode_loadTwiceRequestDataFromURLTwice() {
+        let url = URL(string: "https://rickandmortyapi.com/api/episode/28")!
+        let (sut, client) = makeSUT(url: url)
+
+        sut.load { _ in }
+        sut.load { _ in }
+
+        XCTAssertEqual(client.requestedURLs, [url, url])
+    }
+
+    func test_singleEpisode_loadDeliversConnectivityErrorOnClientError() {
+        let (sut, client) = makeSUT()
+        
+        expect(sut, toCompleteWith: .failure(.connectivity), when: {
+            let clientError = NSError(domain: "Test", code: 0)
+            client.complete(with: clientError)
+        })
+    }
+
+    func test_singleEpisode_loadDeliversInvalidDataErrorOnNon200HTTPResponse() {
+        let (sut, client) = makeSUT()
+
+        let samples = [199, 201, 300, 400, 500]
+
+        samples.enumerated().forEach { index, code in
+            expect(sut, toCompleteWith: .failure(.invalidData), when: {
+                let json = makecharacterJSON()
+                client.complete(withStatusCode: code, data: json, at: index)
+            })
+        }
+    }
+
+    func test_singleEpisode_loadDeliversInvalidDataErrorOn200HTTPResponseWithinvalidJSON() {
+        let (sut, client) = makeSUT()
+
+        expect(sut, toCompleteWith: .failure(.invalidData), when: {
+            let invalidJSON = Data("invalid JSON".utf8)
+            client.complete(withStatusCode: 200, data: invalidJSON)
+        })
+    }
+    
+    override func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/episode/28")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader<EpisodeModel>, client: HTTPClientSpy) {
+        super.makeSUT(url: url, file: file, line: line)
+    }
 }
