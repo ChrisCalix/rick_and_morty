@@ -10,7 +10,7 @@ import XCTest
 
 class LoadAllCharactersFromRemoteUseTestCase: NetworkTestCase<AllCharacterModel> {
     
-    func test_singleCharacter_doesNotRequestDataFromURL() {
+    func test_allCharacter_doesNotRequestDataFromURL() {
         let (_, client) = makeSUT()
 
         XCTAssertTrue(client.requestedURLs.isEmpty)

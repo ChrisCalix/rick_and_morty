@@ -13,7 +13,7 @@ typealias NetworkModuleConditions = Decodable & Equatable
 class NetworkTestCase<T: NetworkModuleConditions>: XCTestCase {
     
     //MARK: Helpers
-    func makeSUT(url: URL, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader<T>, client: HTTPClientSpy) {
+    func makeSUT(url: URL = URL(string: "")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader<T>, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
         let sut = RemoteFeedLoader<T>(url: url, client: client)
         trackForMemoryLeaks(sut, file: file, line: line)
