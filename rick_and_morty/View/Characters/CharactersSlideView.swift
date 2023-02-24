@@ -7,26 +7,15 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    
+struct CharactersSlideView: View {
     @ObservedObject var viewModel = CharacterViewModel()
-    
-    @State var index = 0
-    @State var top = 0
-    
-    @State var data = [
-        Picture(id: 0, picture: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"),
-        Picture(id: 1, picture: "https://rickandmortyapi.com/api/character/avatar/3.jpeg"),
-        Picture(id: 2, picture: "https://rickandmortyapi.com/api/character/avatar/4.jpeg"),
-        Picture(id: 3, picture: "https://rickandmortyapi.com/api/character/avatar/5.jpeg")
-    ]
     
     var body: some View {
         ZStack {
-            
-            PlayerScrollView(data: self.$data)
-                .offset(y: -25)
-            
+            if !viewModel.characters.isEmpty  {
+                PlayerScrollView(data: viewModel)
+                    .offset(y: -25)
+            }
         }
         .background(Color.black.edgesIgnoringSafeArea(.all))
         .edgesIgnoringSafeArea(.all)
@@ -38,52 +27,23 @@ struct ContentView: View {
 
 struct PlayerView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
-    }
-}
-
-
-struct Picture: Identifiable {
-    var id: Int
-    var picture: String
-}
-
-
-struct PlayerView: View {
-    
-    @Binding var data : [ Picture ]
-    
-    var body: some View {
-        HStack(spacing: 0) {
-            ForEach(self.data) { picture in
-                ZStack {
-                    AsyncImage(url: URL(string: picture.picture)!){ image in
-                        image.resizable()
-                    } placeholder: {
-                        Color.gray
-                    }.frame(width: UIScreen.main.bounds.width, height:  UIScreen.main.bounds.height)
-                    
-                    CharacterOptions(foreGroundColors: .white, backgroundColors: .cyan)
-                }
-                
-            }
-        }
-        
+        CharactersSlideView()
     }
 }
 
 
 struct PlayerScrollView: UIViewRepresentable {
     
-    @Binding var data: [Picture]
+    @ObservedObject var data: CharacterViewModel
     
     func makeUIView(context: Context) -> UIScrollView {
         let view = UIScrollView()
-        let childView = UIHostingController(rootView: PlayerView(data: self.$data))
+        let childView = UIHostingController(rootView: PaintingView(data: data))
         
-        childView.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width * CGFloat((data.count)), height: UIScreen.main.bounds.height )
+        let cant = data.characters.count
+        childView.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width * CGFloat(cant), height: UIScreen.main.bounds.height )
         
-        view.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(data.count), height: UIScreen.main.bounds.height)
+        view.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(cant), height: UIScreen.main.bounds.height)
         
         view.addSubview(childView.view)
         view.showsVerticalScrollIndicator = false

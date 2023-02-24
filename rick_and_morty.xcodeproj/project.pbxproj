@@ -16,7 +16,8 @@
 		C34DFFF929A8443300D71B3B /* LoadMultipleEpisodesFromRemoteUseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34DFFF829A8443300D71B3B /* LoadMultipleEpisodesFromRemoteUseTestCase.swift */; };
 		C34DFFFB29A848B000D71B3B /* AllEpisodesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34DFFFA29A848B000D71B3B /* AllEpisodesModel.swift */; };
 		C34DFFFD29A848E300D71B3B /* LoadAllEpisodesFromRemoteUseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34DFFFC29A848E300D71B3B /* LoadAllEpisodesFromRemoteUseTestCase.swift */; };
-		C368603B29A85BC400EBCCA7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C368603A29A85BC400EBCCA7 /* ContentView.swift */; };
+		C368603B29A85BC400EBCCA7 /* CharactersSlideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C368603A29A85BC400EBCCA7 /* CharactersSlideView.swift */; };
+		C39EC13E29A881290062F09F /* PaintingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39EC13D29A881290062F09F /* PaintingView.swift */; };
 		C3A63B0D29A7D81900B56D98 /* CharViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A63B0C29A7D81900B56D98 /* CharViewModel.swift */; };
 		C3A63B0F29A8113E00B56D98 /* AllCharacterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A63B0E29A8113E00B56D98 /* AllCharacterModel.swift */; };
 		C3A63B1129A8135F00B56D98 /* LoadMultipleCharacterFromRemoteUseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A63B1029A8135F00B56D98 /* LoadMultipleCharacterFromRemoteUseTestCase.swift */; };
@@ -62,7 +63,8 @@
 		C34DFFF829A8443300D71B3B /* LoadMultipleEpisodesFromRemoteUseTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMultipleEpisodesFromRemoteUseTestCase.swift; sourceTree = "<group>"; };
 		C34DFFFA29A848B000D71B3B /* AllEpisodesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllEpisodesModel.swift; sourceTree = "<group>"; };
 		C34DFFFC29A848E300D71B3B /* LoadAllEpisodesFromRemoteUseTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadAllEpisodesFromRemoteUseTestCase.swift; sourceTree = "<group>"; };
-		C368603A29A85BC400EBCCA7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C368603A29A85BC400EBCCA7 /* CharactersSlideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersSlideView.swift; sourceTree = "<group>"; };
+		C39EC13D29A881290062F09F /* PaintingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaintingView.swift; sourceTree = "<group>"; };
 		C3A63B0C29A7D81900B56D98 /* CharViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharViewModel.swift; sourceTree = "<group>"; };
 		C3A63B0E29A8113E00B56D98 /* AllCharacterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCharacterModel.swift; sourceTree = "<group>"; };
 		C3A63B1029A8135F00B56D98 /* LoadMultipleCharacterFromRemoteUseTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMultipleCharacterFromRemoteUseTestCase.swift; sourceTree = "<group>"; };
@@ -133,7 +135,8 @@
 		C39EC13C29A8751A0062F09F /* Characters */ = {
 			isa = PBXGroup;
 			children = (
-				C368603A29A85BC400EBCCA7 /* ContentView.swift */,
+				C368603A29A85BC400EBCCA7 /* CharactersSlideView.swift */,
+				C39EC13D29A881290062F09F /* PaintingView.swift */,
 			);
 			path = Characters;
 			sourceTree = "<group>";
@@ -420,12 +423,13 @@
 			files = (
 				C34B4A4C29A7B7E9002C57D1 /* FeedLoader.swift in Sources */,
 				C3D598D429A575A00069B505 /* CharactersView.swift in Sources */,
+				C39EC13E29A881290062F09F /* PaintingView.swift in Sources */,
 				C34B4A4829A7B7A0002C57D1 /* HTTPClient.swift in Sources */,
 				C3A63B0F29A8113E00B56D98 /* AllCharacterModel.swift in Sources */,
 				C34B4A4A29A7B7C9002C57D1 /* FeedMapper.swift in Sources */,
 				C3A63B0D29A7D81900B56D98 /* CharViewModel.swift in Sources */,
 				C3D598FE29A5799E0069B505 /* RemoteFeedLoader.swift in Sources */,
-				C368603B29A85BC400EBCCA7 /* ContentView.swift in Sources */,
+				C368603B29A85BC400EBCCA7 /* CharactersSlideView.swift in Sources */,
 				C3D598D229A575A00069B505 /* rick_and_mortyApp.swift in Sources */,
 				C34B4A7629A7C465002C57D1 /* APIService.swift in Sources */,
 				C3A63B2529A83F4D00B56D98 /* EpisodeModel.swift in Sources */,

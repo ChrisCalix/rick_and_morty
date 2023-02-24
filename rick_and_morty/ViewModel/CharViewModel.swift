@@ -31,7 +31,38 @@ class CharacterViewModel: ObservableObject {
     }
 
     func getSingleCharacter(id: Int) {
-        
+        let remote = RemoteFeedLoader<[CharacterModel]>(url: URL(string: "https://rickandmortyapi.com/api/character/\(id)")!, client: APIService())
+        remote.load() { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case let .success(feed):
+                DispatchQueue.main.async {
+                    self.characters = feed
+                }
+                
+                print("succes \(feed)")
+            case let .failure(error):
+                print("error \(error)")
+            }
+        }
+    }
+    
+    func getMultipleCharacter(ids: [Int]) {
+        let strIds = ids.map { String($0) }.joined(separator: ", ")
+        let remote = RemoteFeedLoader<[CharacterModel]>(url: URL(string: "https://rickandmortyapi.com/api/character/\(strIds)")!, client: APIService())
+        remote.load() { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case let .success(feed):
+                DispatchQueue.main.async {
+                    self.characters = feed
+                }
+                
+                print("succes \(feed)")
+            case let .failure(error):
+                print("error \(error)")
+            }
+        }
     }
 }
 
