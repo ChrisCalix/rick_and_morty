@@ -26,6 +26,9 @@ struct PaintingView: View {
                 
             }
         }
-        
+    }
+    
+    init(from viewModel: CharacterViewModel) {
+        self.viewModel = viewModel
     }
 }

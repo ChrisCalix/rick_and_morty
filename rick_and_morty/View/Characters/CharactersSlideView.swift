@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct CharactersSlideView: View {
-    @ObservedObject var viewModel = CharacterViewModel()
+    @ObservedObject var viewModel: CharacterViewModel
     
     var body: some View {
         ZStack {
             if !viewModel.characters.isEmpty  {
-                PlayerScrollView(viewModel: viewModel)
+                PaintingScrollView(from: viewModel)
                     .offset(y: -25)
             }
         }
@@ -23,11 +23,15 @@ struct CharactersSlideView: View {
             viewModel.getAllCharacters()
         }
     }
+    
+    init(from viewModel: CharacterViewModel) {
+        self.viewModel = viewModel
+    }
 }
 
 struct PlayerView_Previews: PreviewProvider {
     static var previews: some View {
-        CharactersSlideView()
+        CharactersSlideView(from: CharacterViewModel())
     }
 }
 
