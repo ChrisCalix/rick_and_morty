@@ -21,9 +21,13 @@ struct PaintingView: View {
                         Color.gray
                     }.frame(width: UIScreen.main.bounds.width, height:  UIScreen.main.bounds.height)
                     
-                    CharacterOptionsView(foreGroundColors: .white, backgroundColors: .cyan)
+                    CharacterOptionsView(from: viewModel, idCharacter: character.id, foreGroundColors: .black.opacity(0.8), backgroundColors: .white)
                 }
-                
+                .sheet(isPresented: $viewModel.showingBottomDetailSheet) {
+                    BottomSheetDetailView(from: viewModel)
+                        .presentationDetents([.height(110), .height(300)])
+                        .presentationDragIndicator(.visible)
+                }
             }
         }
     }
@@ -32,3 +36,4 @@ struct PaintingView: View {
         self.viewModel = viewModel
     }
 }
+

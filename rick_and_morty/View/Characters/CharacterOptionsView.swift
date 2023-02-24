@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct CharacterOptionsView: View {
-    
+    @State var viewModel: CharacterViewModel
+    @State var idCharacter: Int
     let foreGroundColors: Color
     let backgroundColors: Color
     
@@ -22,7 +23,8 @@ struct CharacterOptionsView: View {
                 Spacer(minLength: 5)
                 
                 Button {
-                    
+                    viewModel.toogleDetailState()
+                    viewModel.getCharacterDescription(id: idCharacter)
                 } label: {
                     Text("DETALLES")
                         .frame(maxWidth: .infinity)
@@ -50,5 +52,12 @@ struct CharacterOptionsView: View {
             }
             .padding(.bottom, 50)
         }
+    }
+    
+    init(from viewModel: CharacterViewModel, idCharacter: Int, foreGroundColors: Color, backgroundColors: Color) {
+        self.viewModel = viewModel
+        self.foreGroundColors = foreGroundColors
+        self.backgroundColors = backgroundColors
+        self.idCharacter = idCharacter
     }
 }

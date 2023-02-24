@@ -22,6 +22,7 @@ struct CharactersSlideView: View {
         .onAppear{
             viewModel.getAllCharacters()
         }
+        
     }
     
     init(from viewModel: CharacterViewModel) {
@@ -34,6 +35,7 @@ struct PlayerView_Previews: PreviewProvider {
         CharactersSlideView(from: CharacterViewModel())
     }
 }
+
 
 
 

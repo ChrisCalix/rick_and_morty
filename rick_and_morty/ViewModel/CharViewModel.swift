@@ -10,8 +10,21 @@ import Foundation
 class CharacterViewModel: ObservableObject {
     
     @Published var characters : [CharacterModel] = []
+    @Published var showingBottomDetailSheet: Bool = false
+    @Published var characterDetail: CharacterModel?
     
     init () { }
+    
+    func toogleDetailState() {
+        showingBottomDetailSheet.toggle()
+    }
+    
+    func getCharacterDescription(id: Int) {
+        characterDetail = characters
+            .lazy
+            .filter({ $0.id == id})
+            .first
+    }
     
     func getAllCharacters() {
         let remote = RemoteFeedLoader<AllCharacterModel>(url: URL(string: "https://rickandmortyapi.com/api/character")!, client: APIService())
