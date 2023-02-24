@@ -25,6 +25,7 @@
 		C39EC14A29A89BA00062F09F /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39EC14929A89BA00062F09F /* LocationModel.swift */; };
 		C39EC14D29A8A4B50062F09F /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39EC14C29A8A4B50062F09F /* LocationView.swift */; };
 		C39EC14F29A8A70F0062F09F /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39EC14E29A8A70F0062F09F /* LocationViewModel.swift */; };
+		C39EC15329A8BC640062F09F /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39EC15229A8BC640062F09F /* NetworkMonitor.swift */; };
 		C3A63B0D29A7D81900B56D98 /* CharViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A63B0C29A7D81900B56D98 /* CharViewModel.swift */; };
 		C3A63B0F29A8113E00B56D98 /* AllCharacterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A63B0E29A8113E00B56D98 /* AllCharacterModel.swift */; };
 		C3A63B1129A8135F00B56D98 /* LoadMultipleCharacterFromRemoteUseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A63B1029A8135F00B56D98 /* LoadMultipleCharacterFromRemoteUseTestCase.swift */; };
@@ -79,6 +80,7 @@
 		C39EC14929A89BA00062F09F /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		C39EC14C29A8A4B50062F09F /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 		C39EC14E29A8A70F0062F09F /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
+		C39EC15229A8BC640062F09F /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		C3A63B0C29A7D81900B56D98 /* CharViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharViewModel.swift; sourceTree = "<group>"; };
 		C3A63B0E29A8113E00B56D98 /* AllCharacterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCharacterModel.swift; sourceTree = "<group>"; };
 		C3A63B1029A8135F00B56D98 /* LoadMultipleCharacterFromRemoteUseTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMultipleCharacterFromRemoteUseTestCase.swift; sourceTree = "<group>"; };
@@ -183,6 +185,14 @@
 			path = Locations;
 			sourceTree = "<group>";
 		};
+		C39EC15129A8BC580062F09F /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				C39EC15229A8BC640062F09F /* NetworkMonitor.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		C3A63B1B29A832C000B56D98 /* Characters */ = {
 			isa = PBXGroup;
 			children = (
@@ -263,6 +273,7 @@
 		C3D598D029A575A00069B505 /* rick_and_morty */ = {
 			isa = PBXGroup;
 			children = (
+				C39EC15129A8BC580062F09F /* Components */,
 				C3A63B1E29A835F200B56D98 /* ViewModel */,
 				C3A63B1C29A835BD00B56D98 /* Model */,
 				C34B4A4329A7B6F1002C57D1 /* View */,
@@ -479,6 +490,7 @@
 				C368603B29A85BC400EBCCA7 /* CharactersSlideView.swift in Sources */,
 				C39EC14229A882020062F09F /* CharacterOptionsView.swift in Sources */,
 				C3D598D229A575A00069B505 /* rick_and_mortyApp.swift in Sources */,
+				C39EC15329A8BC640062F09F /* NetworkMonitor.swift in Sources */,
 				C34B4A7629A7C465002C57D1 /* APIService.swift in Sources */,
 				C3A63B2529A83F4D00B56D98 /* EpisodeModel.swift in Sources */,
 				C39EC14D29A8A4B50062F09F /* LocationView.swift in Sources */,
