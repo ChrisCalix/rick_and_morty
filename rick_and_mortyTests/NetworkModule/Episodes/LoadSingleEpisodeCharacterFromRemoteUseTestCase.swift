@@ -5,8 +5,9 @@
 //  Created by Sonic on 23/2/23.
 //
 
-import Foundation
+import XCTest
+@testable import rick_and_morty
 
-class LoadSingleEpisodeCharacterFromRemoteUseTestCase: NetworkTestCase {
+class LoadSingleEpisodeCharacterFromRemoteUseTestCase: NetworkTestCase<EpisodeModel> {
     
 }
