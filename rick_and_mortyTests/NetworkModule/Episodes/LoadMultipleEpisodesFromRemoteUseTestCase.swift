@@ -1,5 +1,5 @@
 //
-//  LoadSingleEpisodeCharacterFromRemoteUseTestCase.swift
+//  LoadMultipleEpisodesFromRemoteUseTestCase.swift
 //  rick_and_mortyTests
 //
 //  Created by Sonic on 23/2/23.
@@ -8,16 +8,16 @@
 import XCTest
 @testable import rick_and_morty
 
-class LoadSingleEpisodeFromRemoteUseTestCase: NetworkTestCase<EpisodeModel> {
+class LoadMultipleEpisodesFromRemoteUseTestCase: NetworkTestCase<[EpisodeModel]> {
     
-    func test_singleEpisode_doesNotRequestDataFromURL() {
+    func test_multipleEpisode_doesNotRequestDataFromURL() {
         let (_, client) = makeSUT()
 
         XCTAssertTrue(client.requestedURLs.isEmpty)
     }
     
-    func test_singleEpisode_loadTwiceRequestDataFromURLTwice() {
-        let url = URL(string: "https://rickandmortyapi.com/api/episode/28")!
+    func test_multipleEpisode_loadTwiceRequestDataFromURLTwice() {
+        let url = URL(string: "https://rickandmortyapi.com/api/episode/10,28")!
         let (sut, client) = makeSUT(url: url)
 
         sut.load { _ in }
@@ -26,7 +26,7 @@ class LoadSingleEpisodeFromRemoteUseTestCase: NetworkTestCase<EpisodeModel> {
         XCTAssertEqual(client.requestedURLs, [url, url])
     }
 
-    func test_singleEpisode_loadDeliversConnectivityErrorOnClientError() {
+    func test_multipleEpisode_loadDeliversConnectivityErrorOnClientError() {
         let (sut, client) = makeSUT()
         
         expect(sut, toCompleteWith: .failure(.connectivity), when: {
@@ -35,7 +35,7 @@ class LoadSingleEpisodeFromRemoteUseTestCase: NetworkTestCase<EpisodeModel> {
         })
     }
 
-    func test_singleEpisode_loadDeliversInvalidDataErrorOnNon200HTTPResponse() {
+    func test_multipleEpisode_loadDeliversInvalidDataErrorOnNon200HTTPResponse() {
         let (sut, client) = makeSUT()
 
         let samples = [199, 201, 300, 400, 500]
@@ -48,7 +48,7 @@ class LoadSingleEpisodeFromRemoteUseTestCase: NetworkTestCase<EpisodeModel> {
         }
     }
 
-    func test_singleEpisode_loadDeliversInvalidDataErrorOn200HTTPResponseWithinvalidJSON() {
+    func test_multipleEpisode_loadDeliversInvalidDataErrorOn200HTTPResponseWithinvalidJSON() {
         let (sut, client) = makeSUT()
 
         expect(sut, toCompleteWith: .failure(.invalidData), when: {
@@ -57,19 +57,26 @@ class LoadSingleEpisodeFromRemoteUseTestCase: NetworkTestCase<EpisodeModel> {
         })
     }
     
-    func test_singleCharacter_loadDeliversSuccessWithNoItemsOn200HTTPResponseWithJSONItems() {
+    func test_multipleCharacter_loadDeliversSuccessWithNoItemsOn200HTTPResponseWithJSONItems() {
         let (sut, client) = makeSUT()
         
-        let episode = makeSimpleEpisode()
+        let episode1 = makeSimpleEpisode()
+        let episode2 = makeSimpleEpisode()
         
-        expect(sut, toCompleteWith: .success(episode.model), when: {
-            let json = makecharacterJSON(episode.json)
+        let episodes = [episode1.model, episode2.model]
+        expect(sut, toCompleteWith: .success(episodes), when: {
+            let json = makecharactersJSON([episode1.json, episode2.json])
             client.complete(withStatusCode: 200, data: json)
         })
     }
     
-    override func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/episode/28")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader<EpisodeModel>, client: HTTPClientSpy) {
+    override func makeSUT(url: URL = URL(string: "https://rickandmortyapi.com/api/episode/10,28")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader<[EpisodeModel]>, client: HTTPClientSpy) {
         super.makeSUT(url: url, file: file, line: line)
+    }
+    
+    func makecharactersJSON(_ characters: [[String: Any]]) -> Data {
+        let json = characters
+        return try! JSONSerialization.data(withJSONObject: json)
     }
     
     func makeSimpleEpisode() -> (model: EpisodeModel, json: [String: Any]){
