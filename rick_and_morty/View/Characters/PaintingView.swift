@@ -9,11 +9,11 @@ import SwiftUI
 
 struct PaintingView: View {
     
-    @ObservedObject var data: CharacterViewModel
+    @ObservedObject var viewModel: CharacterViewModel
     
     var body: some View {
         HStack(spacing: 0) {
-            ForEach(self.data.characters) { character in
+            ForEach(self.viewModel.characters) { character in
                 ZStack {
                     AsyncImage(url: URL(string: character.image)!){ image in
                         image.resizable()
@@ -21,7 +21,7 @@ struct PaintingView: View {
                         Color.gray
                     }.frame(width: UIScreen.main.bounds.width, height:  UIScreen.main.bounds.height)
                     
-                    CharacterOptions(foreGroundColors: .white, backgroundColors: .cyan)
+                    CharacterOptionsView(foreGroundColors: .white, backgroundColors: .cyan)
                 }
                 
             }
