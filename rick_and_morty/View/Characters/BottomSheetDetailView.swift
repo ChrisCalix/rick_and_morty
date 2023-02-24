@@ -27,7 +27,7 @@ struct BottomSheetDetailView: View {
                             .padding(.horizontal)
                             .padding(.vertical, 8)
                             .foregroundColor(.white)
-                            .background(characterSelected.status == "Alive" ? .green : .red)
+                            .background(characterSelected.status.lowercased() == "alive" ? .green : characterSelected.status.lowercased() == "unknown" ? .gray: .red)
                             .clipShape(RoundedRectangle(cornerRadius: 15))
                     }
                     .padding(.vertical, 20)
@@ -82,7 +82,7 @@ struct BottomSheetDetailView: View {
                 }
             }
         } else {
-            Text("No se tiene descripcion del personaje")
+            Text("We don't have more infarmation about the characeter")
                 .font(.title)
         }
     }

@@ -26,7 +26,7 @@ struct CharacterOptionsView: View {
                     viewModel.toogleDetailState()
                     viewModel.getCharacterDescription(id: idCharacter)
                 } label: {
-                    Text("DETALLES")
+                    Text("DETAILS")
                         .frame(maxWidth: .infinity)
                         .foregroundColor(foreGroundColors)
                         .fontWeight(.bold)
